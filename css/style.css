@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    padding: 30px;
+    color: #1a345e;
+}
+
+.indexContainer {
+    background-color: #2c4f89;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.logoTeatro{
+    width: 440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoTeatro img{
+    width: 100%
+}
+
+.newsletter{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: aliceblue;
+}
+
+.newsletter form {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.newsletter form .campo {
+    width: 100%;
+    padding: 15px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    outline: 0px;
+    margin-bottom: 5px;
+}
+
+.newsletter form .boton {
+    width: 150px;
+    padding: 15px 15px;
+    border: none;
+    font-size: 16px;
+    border-radius: 3px;
+    background: #68C3A3;
+    color: #fff;
+    cursor: pointer;
+    outline: 0px;
+}
+
+.newsletter form .boton:hover {
+    background: #3eba8f;
+}
+
+.newsletter input {
+    text-align: center;
+}
+
+
+.redes {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    width: 440px;
+    display: flex;
+    justify-content: space-between;

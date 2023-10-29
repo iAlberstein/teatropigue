@@ -9,8 +9,16 @@ h5 {
     color: #223b62;
 }
 
-.indexContainer,
-.suscripcionContainer {
+.indexContainer {
+    background-color: #2c4f89;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.suscripcionContainer{
     background-color: #2c4f89;
     display: flex;
     height: 100vh;
@@ -30,7 +38,7 @@ h5 {
 
 
 .logoTeatro{
-    width: 80%;
+    width: 70%;
     max-width: 400px;
     display: flex;
     justify-content: center;
@@ -43,7 +51,6 @@ h5 {
 
 .newsletter{
     width: 80%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -13,6 +13,9 @@
             $fechareg = date ("d/m/y");
             $consulta = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$nombre','$email','$fechareg')";
             $resultado = mysqli_query($conex, $consulta);
+
+            ob_start();
+            
             if ($resultado) {
                 header('Location: conexionExitosa.html');
                 exit;

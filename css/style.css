@@ -4,21 +4,34 @@
     box-sizing: border-box;
 }
 
-h1 {
-    padding: 30px;
-    color: #1a345e;
+h5 {
+    padding-top: 10px;
+    color: #223b62;
 }
 
-.indexContainer {
+.indexContainer,
+.suscripcionContainer {
     background-color: #2c4f89;
     display: flex;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
+
+.mensajeSuscripcion,
+.volver {
+    color: aliceblue;
+    text-decoration: none;
+    text-align: center;
+}
+
+
 
 
 .logoTeatro{
-    width: 440px;
+    width: 80%;
+    max-width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,9 +92,10 @@ h1 {
 
 
 .redes {
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 50px;
-    width: 440px;
+    width: 80%;
+    max-width: 440px;
     display: flex;
     justify-content: space-between;
 }

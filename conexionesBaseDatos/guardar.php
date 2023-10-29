@@ -1,22 +1,22 @@
 <?php
-    require 'conexion.php';
+    include 'conexion.php';
   
     $nombre  = $_POST['name'];
     $email = $_POST['email'];
 
-    $insertar = "INSERT INTO baseDatos VALUES ('$nombre','$email') ";
+    $insertar = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$name','$email','$fechareg')";
 
     $query = mysqli_query($conn, $insertar);
 
     if($query){
 
-        echo "<script> alert('correcto');
-        location.href = '../index.html';
-        </script>";
+        ?>
+        <h3 class="ok">¡Gracias por suscribirte!</h3>
+        <?php
 
     }else{
-        echo "<script> alert('incorrecto');
-        location.href = '../index.html';
-        </script>";
+        ?>
+        <h3 class="bad">Intentar de nuevo</h3>
+        <?php
     }
 ?>

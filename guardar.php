@@ -14,9 +14,8 @@
             $consulta = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$nombre','$email','$fechareg')";
             $resultado = mysqli_query($conex, $consulta);
             if ($resultado) {
-                ?>
-                <h3 class="ok">¡Gracias por suscribirte!</h3>
-                <?php
+                header('Location: conexionExitosa.html');
+                exit;
             } else {
                 ?>
                 <h3 class="bad">¡Ups, ha ocurrido un error!</h3>

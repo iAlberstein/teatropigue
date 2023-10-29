@@ -6,7 +6,7 @@
 
     $insertar = "INSERT INTO baseDatos VALUES ('$nombre','$email') ";
 
-    $query = mysqli_query($conectar, $insertar);
+    $query = mysqli_query($conn, $insertar);
 
     if($query){
 
@@ -19,10 +19,4 @@
         location.href = '../index.html';
         </script>";
     }
-
-
-
-
-
-
 ?>

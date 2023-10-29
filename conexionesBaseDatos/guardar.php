@@ -1,22 +1,26 @@
 <?php
-    include 'conexion.php';
-  
-    $nombre  = $_POST['name'];
-    $email = $_POST['email'];
+    include "./conexion.php";
+    
 
-    $insertar = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$name','$email','$fechareg')";
-
-    $query = mysqli_query($conn, $insertar);
-
-    if($query){
-
-        ?>
-        <h3 class="ok">¡Gracias por suscribirte!</h3>
-        <?php
-
-    }else{
-        ?>
-        <h3 class="bad">Intentar de nuevo</h3>
-        <?php
+    if(isset($_POST['register'])){
+        if (strlen($_POST['name']) < 1 && strlen($_POST['email']) < 1) {
+            $nombre  = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $consulta = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$name','$email','$fechareg')";
+            $resultado = mysqli_query($conex, $consulta);
+            if ($resultado) {
+                ?>
+                <h3 class="ok">¡Gracias por suscribirte!</h3>
+                <?php
+            } else {
+                ?>
+                <h3 class="bad">¡Ups, ha ocurrido un error!</h3>
+                <?php
+            }
+        } else {
+            ?>
+            <h3 class="bad">¡Por favor, complete los campos!</h3>
+            <?php
+        }
     }
 ?>

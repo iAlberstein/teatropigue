@@ -31,6 +31,9 @@
             <label for="submit"></label>
             <input type="submit" class="boton" name="register" value="suscribirme">
         </form>
+        <?php
+        include ("guardar.php")
+        ?>
    </div>
    <div class="redes">
         <a href="">

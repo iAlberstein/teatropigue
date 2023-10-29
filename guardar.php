@@ -11,7 +11,7 @@
             $nombre  = trim($_POST['name']);
             $email = trim($_POST['email']);
             $fechareg = date ("d/m/y");
-            $consulta = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$name','$email','$fechareg')";
+            $consulta = "INSERT INTO baseDatos(nombre, email, fecha_reg) VALUES ('$nombre','$email','$fechareg')";
             $resultado = mysqli_query($conex, $consulta);
             if ($resultado) {
                 ?>

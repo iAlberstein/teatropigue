@@ -51,6 +51,7 @@ h5 {
 
 .newsletter{
     width: 80%;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +88,7 @@ h5 {
     color: #fff;
     cursor: pointer;
     outline: 0px;
+    
 }
 
 .newsletter form .boton:hover {

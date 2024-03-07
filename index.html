@@ -1,17 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/index.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Teatro Español Pigüé</title>
 </head>
-<body>
-    <div class="cuerpo">
-        <p class="titulo">SITIO WEB EN CONSTRUCCIÓN</p>
+<body class="indexContainer">
+    <h5>SITIO WEB EN CONSTRUCCIÓN</h5>
+   <div class="logoTeatro">
         <figure>
-            <img src="./images/LOGO.TEATRO.NEGRO.C.FONDO.BLANCO.JPG" alt="LOGO TEATRO">
+            <img src="./images/Logo Teatro (Centro).jpg" alt="Logo del Teatro Español Pigüé">
         </figure>
-    </div>
+   </div>
+   <div class="newsletter">
+        <h4>RECIBÍ TODAS NUESTRAS NOVEDADES</h4>
+        <h7>
+            <p>Suscribite a nuestro newsletter y recibí en tu mail todas las novedades del Teatro Español Pigüé.</p>
+        </h7>
+        <form action="./guardar.php" method="POST">
+            <label for="name"></label>
+            <input type="name" name="name" id="name" required placeholder="Ingresar nombre y apellido" class="campo">
+
+            <label for="email"></label>
+            <input type="email" class="campo" id="email" name="email" required placeholder="Ingresar dirección de mail"><br><br>
+
+            <label for="submit"></label>
+            <input type="submit" class="boton" name="register" value="suscribirme">
+        </form>
+   </div>
+   <div class="redes">
+        <a href="https://www.instagram.com/teatroespanolpigue/?hl=es-la" target="_blank">
+            <i class="bi bi-instagram" style="font-size: 2rem; color: rgb(81, 95, 100);"></i>
+        </a>
+        <a href="https://www.facebook.com/teatroespanolpigue" target="_blank">
+            <i class="bi bi-facebook" style="font-size: 2rem; color: rgb(81, 95, 100);"></i>
+        </a>
+        <a href="mailto:teatropigue@gmail.com" target="_blank">
+            <i class="bi bi-envelope" style="font-size: 2rem; color: rgb(81, 95, 100);"></i>
+        </a>
+        <a href="https://api.whatsapp.com/send/?phone=541128765729&text&type=phone_number&app_absent=0" target="_blank">
+            <i class="bi bi-whatsapp" style="font-size: 2rem; color: rgb(81, 95, 100);"></i>
+        </a>
+
+   </div>
+
+   
+   <script src="./js/bootstrap.bundle.min.js"></script> 
 </body>
 </html>

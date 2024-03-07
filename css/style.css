@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h5 {
+    padding-top: 10px;
+    color: #223b62;
+}
+
+.indexContainer {
+    background-color: white;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.suscripcionContainer{
+    background-color: white;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mensajeSuscripcion,
+.volver {
+    color: rgb(81, 95, 100);
+    text-decoration: none;
+    text-align: center;
+}
+
+
+
+
+.logoTeatro{
+    width: 70%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoTeatro img{
+    width: 100%
+}
+
+.newsletter{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: rgb(81, 95, 100);
+}
+
+.newsletter form {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.newsletter form .campo {
+    width: 100%;
+    padding: 15px 15px;
+    font-size: 16px;
+    border: solid 1px;
+    border-radius: 3px;
+    outline: 0px;
+    margin-bottom: 5px;
+}
+
+.newsletter form .boton {
+    width: 150px;
+    padding: 15px 15px;
+    border: none;
+    font-size: 16px;
+    border-radius: 3px;
+    background: #68C3A3;
+    color: #fff;
+    cursor: pointer;
+    outline: 0px;
+}
+
+.newsletter form .boton:hover {
+    background: #3eba8f;
+}
+
+.newsletter input {
+    text-align: center;
+}
+
+
+.redes {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 80%;
+    max-width: 440px;
+    display: flex;
+    justify-content: space-between;
+}
+

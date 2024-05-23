@@ -12,7 +12,7 @@ if (isset($_POST['register'])) {
         $resultado = mysqli_query($conex, $consulta);
         ob_start();
         if ($resultado) {
-            header('Location: suscripcionExitosa.html');
+            header('Location: pages/suscripcionExitosa.html');
             exit;
         } else {
             ?>

@@ -64,7 +64,7 @@ header {
 }
 
 @media (max-width: 768px) {
-    .nav-links {
+    /* .nav-links {
         display: none;
         position: absolute;
         top: 100px;
@@ -73,9 +73,9 @@ header {
         background-color: rgb(81, 95, 100);
         flex-direction: column;
         text-align: center;
-    }
+    } */
     
-    .nav-links li {
+    /* .nav-links li {
         margin: 10px 0;
     }
     
@@ -85,7 +85,7 @@ header {
     
     .nav-links.active {
         display: flex;
-    }
+    } */
     .infoContainer {
         width: 700px;
         display: flex;
@@ -93,6 +93,19 @@ header {
         justify-content: space-between;
         align-items: center;
 
+    }
+    .carousel-caption {
+        font-size: 12px;
+        max-height: 100px;
+    }
+    .carousel-caption h4 {
+        font-size: 10px;
+    }
+    .carousel-caption h3 {
+        font-size: 10px;
+    }
+    .carousel-caption p {
+        display: none;
     }
 }
 
@@ -145,6 +158,7 @@ footer {
 .carousel {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     border: solid 1px rgba(109, 109, 109, 0.728);
+    max-width: 1080px;
 
 }
 
@@ -255,4 +269,17 @@ h1 {
     text-align: center;
     max-width: 600px;
     background-color: rgb(197, 205, 196);
+}
+
+.mainHome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mensajeSuscripcion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
 }

@@ -238,6 +238,15 @@ h1 {
     gap: 15px;
 }
 
+.columnaCartelera {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    max-width: 500px;
+}
+
 .infoBoleteria .mapa {
     max-width: 700px;
     margin: 20px;

@@ -6,14 +6,14 @@ body {
 }
 
 header {
-    background: linear-gradient(to top right, rgb(81, 95, 100), rgb(72, 128, 107));
+    background: rgb(48, 53, 49);
     padding: 10px 0;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 20px;
     height: 100px;
 }
@@ -115,7 +115,7 @@ main {
 
 
 footer {
-    background: linear-gradient(to bottom left, rgb(81, 95, 100), rgb(73, 121, 103));
+    background: rgb(48, 53, 49);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -216,7 +216,7 @@ h1 {
     border: none;
     font-size: 16px;
     border-radius: 3px;
-    background: #68C3A3;
+    background: #1f4038;
     color: #fff;
     cursor: pointer;
     outline: 0px;
@@ -224,7 +224,7 @@ h1 {
 }
 
 .newsletter form .boton:hover {
-    background: #3eba8f;
+    background: #049562;
 }
 
 .newsletter input {

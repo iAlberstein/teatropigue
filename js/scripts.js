@@ -57,76 +57,6 @@ function homeView() {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si el formulario de newsletter existe
-    const formNewsletter = document.getElementById('newsletter-form');
-    
-    // Si el formulario existe, agregar el evento de envío
-    if (formNewsletter) {
-        formNewsletter.addEventListener('submit', function(e) {
-            e.preventDefault();  // Evitar el envío tradicional del formulario
-            
-            // Recoger los datos del formulario
-            const formData = new FormData(formNewsletter);
-
-            // Enviar los datos al servidor mediante AJAX
-            fetch('guardar.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.text())  // Recibimos la respuesta como texto
-            .then(response => {
-                if (response === "success") {
-                    // Mostrar alerta de éxito
-                    Swal.fire({
-                        title: '¡Éxito!',
-                        text: 'Tu suscripción fue realizada correctamente.',
-                        icon: 'success',
-                        confirmButtonText: 'Cerrar'
-                    }).then(function() {
-                        // Limpiar el formulario después de mostrar el mensaje
-                        formNewsletter.reset();
-                    });
-                } else if (response === "error") {
-                    // Mostrar alerta de error
-                    Swal.fire({
-                        title: '¡Error!',
-                        text: 'Hubo un problema al procesar tu solicitud. Intenta nuevamente.',
-                        icon: 'error',
-                        confirmButtonText: 'Cerrar'
-                    });
-                } else if (response === "empty") {
-                    // Mostrar alerta si los campos están vacíos
-                    Swal.fire({
-                        title: '¡Advertencia!',
-                        text: 'Por favor, completa todos los campos.',
-                        icon: 'warning',
-                        confirmButtonText: 'Cerrar'
-                    });
-                }
-            })
-            .catch(() => {
-                // En caso de error en la solicitud AJAX
-                Swal.fire({
-                    title: '¡Error!',
-                    text: 'Hubo un problema al enviar los datos. Intenta nuevamente.',
-                    icon: 'error',
-                    confirmButtonText: 'Cerrar'
-                });
-            });
-        });
-    } else {
-        console.log('Formulario no encontrado');
-    }
-
-    // Cargar el próximo espectáculo (si es necesario)
-    if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
-        loadNextShow();
-    }
-});
-
-
-
 function carteleraView() {
     return `
         <div class="container mt-4">
@@ -255,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('app').addEventListener('DOMSubtreeModified', () => {
         if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
             loadNextShow();
+            setupNewsletterForm(); // Añadir configuración del formulario del Newsletter
         }
         if (window.location.hash.startsWith('#/cartelera')) {
             loadCartelera();
@@ -272,6 +203,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Configurar el formulario del Newsletter
+function setupNewsletterForm() {
+    const form = document.getElementById('newsletter-form');
+    if (form) { // Asegurarse de que el formulario exista
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            formData.append('register', 'true'); // Añadir el campo register para que el PHP lo reconozca
+
+            try {
+                const response = await fetch('guardar.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: result.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000,
+                        timerProgressBar: true,
+                    }).then(() => {
+                        form.reset(); // Limpiar el formulario
+                        // No hacemos navigateTo porque queremos quedarnos en el home
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: result.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                }
+            } catch (error) {
+                console.error('Error al procesar la solicitud:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error al enviar los datos. Intente nuevamente.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            }
+        });
+    }
+}
 
 // Cargar el próximo espectáculo
 function loadNextShow() {

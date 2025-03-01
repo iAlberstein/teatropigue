@@ -47,15 +47,73 @@ function homeView() {
             <div class="newsletter">
                 <h4>¡Suscribite a nuestro newsletter!</h4>
                 <p>Recibí todas las novedades del Teatro Español Pigüé en tu mail.</p>
-                <form id="newsletter-form" action="./guardar.php" method="POST">
+                <form id="newsletter-form">
                     <input type="text" name="name" id="name" required placeholder="Nombre y apellido" class="campo">
                     <input type="email" name="email" id="email" required placeholder="Dirección de mail" class="campo">
-                    <input type="submit" name="register" value="Suscribirme" class="boton">
+                    <input type="submit" value="Suscribirme" class="boton">
                 </form>
             </div>
         </div>
     `;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Lógica para el formulario de newsletter
+    const formNewsletter = document.getElementById('newsletter-form');
+    formNewsletter.addEventListener('submit', function(e) {
+        e.preventDefault();  // Evitar el envío tradicional del formulario
+        
+        // Recoger los datos del formulario
+        const formData = new FormData(formNewsletter);
+
+        // Enviar los datos al servidor mediante AJAX
+        fetch('guardar.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())  // Recibimos la respuesta como texto
+        .then(response => {
+            if (response === "success") {
+                // Mostrar alerta de éxito
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'Tu suscripción fue realizada correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
+                }).then(function() {
+                    // Limpiar el formulario después de mostrar el mensaje
+                    formNewsletter.reset();
+                });
+            } else if (response === "error") {
+                // Mostrar alerta de error
+                Swal.fire({
+                    title: '¡Error!',
+                    text: 'Hubo un problema al procesar tu solicitud. Intenta nuevamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
+                });
+            } else if (response === "empty") {
+                // Mostrar alerta si los campos están vacíos
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: 'Por favor, completa todos los campos.',
+                    icon: 'warning',
+                    confirmButtonText: 'Cerrar'
+                });
+            }
+        })
+        .catch(() => {
+            // En caso de error en la solicitud AJAX
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Hubo un problema al enviar los datos. Intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
+            });
+        });
+    });
+});
+
 
 function carteleraView() {
     return `

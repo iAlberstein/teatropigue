@@ -12,29 +12,13 @@ if (isset($_POST['register'])) {
         $resultado = mysqli_query($conex, $consulta);
         
         if ($resultado) {
-            // Mostrar SweetAlert y limpiar el formulario con JavaScript
-            echo "<script>
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'Tu suscripción fue realizada correctamente.',
-                    icon: 'success',
-                    confirmButtonText: 'Cerrar'
-                }).then(function() {
-                    // Limpiar el formulario
-                    document.getElementById('formSuscripcion').reset();
-                });
-            </script>";
+            echo "success";  // Respuesta exitosa
         } else {
-            // Si ocurre un error, mostrar un mensaje con SweetAlert
-            echo "<script>
-                Swal.fire({
-                    title: '¡Error!',
-                    text: '¡Ups, ha ocurrido un error al procesar tu solicitud!',
-                    icon: 'error',
-                    confirmButtonText: 'Cerrar'
-                });
-            </script>";
+            echo "error";  // Respuesta de error
         }
+    } else {
+        echo "empty";  // Respuesta si los campos están vacíos
+    }
     } else {
         // Si los campos están vacíos
         echo "<script>

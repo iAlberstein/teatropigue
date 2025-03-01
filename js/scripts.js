@@ -58,61 +58,73 @@ function homeView() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica para el formulario de newsletter
+    // Verificar si el formulario de newsletter existe
     const formNewsletter = document.getElementById('newsletter-form');
-    formNewsletter.addEventListener('submit', function(e) {
-        e.preventDefault();  // Evitar el envío tradicional del formulario
-        
-        // Recoger los datos del formulario
-        const formData = new FormData(formNewsletter);
+    
+    // Si el formulario existe, agregar el evento de envío
+    if (formNewsletter) {
+        formNewsletter.addEventListener('submit', function(e) {
+            e.preventDefault();  // Evitar el envío tradicional del formulario
+            
+            // Recoger los datos del formulario
+            const formData = new FormData(formNewsletter);
 
-        // Enviar los datos al servidor mediante AJAX
-        fetch('guardar.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.text())  // Recibimos la respuesta como texto
-        .then(response => {
-            if (response === "success") {
-                // Mostrar alerta de éxito
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'Tu suscripción fue realizada correctamente.',
-                    icon: 'success',
-                    confirmButtonText: 'Cerrar'
-                }).then(function() {
-                    // Limpiar el formulario después de mostrar el mensaje
-                    formNewsletter.reset();
-                });
-            } else if (response === "error") {
-                // Mostrar alerta de error
+            // Enviar los datos al servidor mediante AJAX
+            fetch('guardar.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.text())  // Recibimos la respuesta como texto
+            .then(response => {
+                if (response === "success") {
+                    // Mostrar alerta de éxito
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: 'Tu suscripción fue realizada correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
+                    }).then(function() {
+                        // Limpiar el formulario después de mostrar el mensaje
+                        formNewsletter.reset();
+                    });
+                } else if (response === "error") {
+                    // Mostrar alerta de error
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: 'Hubo un problema al procesar tu solicitud. Intenta nuevamente.',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
+                    });
+                } else if (response === "empty") {
+                    // Mostrar alerta si los campos están vacíos
+                    Swal.fire({
+                        title: '¡Advertencia!',
+                        text: 'Por favor, completa todos los campos.',
+                        icon: 'warning',
+                        confirmButtonText: 'Cerrar'
+                    });
+                }
+            })
+            .catch(() => {
+                // En caso de error en la solicitud AJAX
                 Swal.fire({
                     title: '¡Error!',
-                    text: 'Hubo un problema al procesar tu solicitud. Intenta nuevamente.',
+                    text: 'Hubo un problema al enviar los datos. Intenta nuevamente.',
                     icon: 'error',
                     confirmButtonText: 'Cerrar'
                 });
-            } else if (response === "empty") {
-                // Mostrar alerta si los campos están vacíos
-                Swal.fire({
-                    title: '¡Advertencia!',
-                    text: 'Por favor, completa todos los campos.',
-                    icon: 'warning',
-                    confirmButtonText: 'Cerrar'
-                });
-            }
-        })
-        .catch(() => {
-            // En caso de error en la solicitud AJAX
-            Swal.fire({
-                title: '¡Error!',
-                text: 'Hubo un problema al enviar los datos. Intenta nuevamente.',
-                icon: 'error',
-                confirmButtonText: 'Cerrar'
             });
         });
-    });
+    } else {
+        console.log('Formulario no encontrado');
+    }
+
+    // Cargar el próximo espectáculo (si es necesario)
+    if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
+        loadNextShow();
+    }
 });
+
 
 
 function carteleraView() {

@@ -32,6 +32,7 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  padding: 10px 15px;
 }
 
 input,
@@ -60,11 +61,15 @@ textarea {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.logoteatro {
+  width: 100px;
+}
+
 /* Contenido principal debajo del Navbar */
 main {
   flex: 1;
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 70px;
+  padding-bottom: 70px;
   background-color: rgb(226, 226, 226);
 }
 
@@ -120,22 +125,6 @@ footer {
 
 .banner-info p {
   margin: 5px 0;
-}
-
-@media (max-width: 992px) {
-  .banner {
-    width: 90%;
-  }
-
-  .banner-info {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  .banner-image {
-    width: 100%;
-    height: auto;
-  }
 }
 
 /* Cartelera */
@@ -455,32 +444,6 @@ footer {
   background-color: #14a06d;
 }
 
-@media (max-width: 768px) {
-  .show-detail-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .show-image-container {
-    order: 1;
-  }
-
-  .show-info-container {
-    order: 2;
-  }
-
-  .show-extra-container {
-    order: 3;
-    text-align: center;
-  }
-
-  .show-image {
-    width: 100%;
-    height: auto;
-  }
-}
-
 /* Historia */
 .historia-container {
   display: flex;
@@ -522,37 +485,6 @@ footer {
   object-fit: cover;
   display: block;
   border-radius: 10px;
-}
-
-@media (max-width: 768px) {
-  .historia-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .historia-image-container {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  .historia-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .historia-content {
-    flex: 1;
-  }
-
-  .historia-content h2 {
-    font-size: 24px;
-  }
-
-  .historia-content p {
-    font-size: 14px;
-  }
 }
 
 /* Footer */
@@ -601,4 +533,157 @@ footer .social-icons a:hover {
 
 .boton:hover {
   background-color: #0056b3;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 992px) {
+  .banner {
+    width: 90%;
+  }
+
+  .banner-info {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .banner-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .admin-tep-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .admin-tep-left,
+  .admin-tep-right {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .logoteatro {
+    width: 70px;
+  }
+
+  main {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .banner {
+    width: 100%;
+  }
+
+  .banner-info {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+
+  .banner-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .banner-info p {
+    font-size: 0.9rem;
+  }
+
+  .search-bar {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .search-bar input,
+  .search-bar select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .shows-container {
+    gap: 15px;
+  }
+
+  .show-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .contacto-container {
+    padding: 15px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+  }
+
+  .show-detail-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .show-image-container {
+    order: 1;
+  }
+
+  .show-info-container {
+    order: 2;
+  }
+
+  .show-extra-container {
+    order: 3;
+    text-align: center;
+  }
+
+  .show-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .historia-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .historia-image-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .historia-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .historia-content h2 {
+    font-size: 24px;
+  }
+
+  .historia-content p {
+    font-size: 14px;
+  }
+
+  .newsletter form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .campo {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+  }
+
+  .boton {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  button {
+    padding: 12px 20px; /* Mejorar usabilidad en móviles */
+  }
 }

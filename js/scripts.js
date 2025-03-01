@@ -9,12 +9,14 @@ const routes = {
 };
 
 function navigateTo(path) {
+    console.log('Navigating to:', path); // Depuración
     window.history.pushState({}, '', '#' + path);
     renderView();
 }
 
 function parseRoute() {
     const path = window.location.hash.slice(1) || '/';
+    console.log('Parsing route:', path); // Depuración
     const routeKeys = Object.keys(routes);
     for (let route of routeKeys) {
         const regex = new RegExp('^' + route.replace(/:\w+/g, '([\\w-]+)') + '$');
@@ -27,32 +29,51 @@ function parseRoute() {
 }
 
 function renderView() {
-    const { handler, params } = parseRoute();
-    const app = document.getElementById('app');
-    app.innerHTML = handler(...params);
+    try {
+        console.log('Rendering view...'); // Depuración
+        const { handler, params } = parseRoute();
+        const app = document.getElementById('app');
+        if (!app) {
+            console.error('Element with id "app" not found');
+            return;
+        }
+        app.innerHTML = handler(...params);
 
-    // Lógica específica según la vista después de renderizar
-    if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
-        loadNextShow();
-        setupNewsletterForm();
-    } else if (window.location.hash.startsWith('#/cartelera')) {
-        loadCartelera();
-    } else if (window.location.hash.startsWith('#/show/')) {
-        const id = window.location.hash.split('/').pop();
-        loadShowDetail(id);
-    } else if (window.location.hash === '#/contacto') {
-        setupContactoForm();
-    } else if (window.location.hash === '#/admin') {
-        setupAdminForm();
-        loadAdminShows();
+        // Lógica específica según la vista después de renderizar
+        if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
+            console.log('Loading home view specific logic...'); // Depuración
+            setupNewsletterForm();
+            loadNextShow(); // Ejecutar después de renderizar para evitar bloqueos
+        } else if (window.location.hash.startsWith('#/cartelera')) {
+            loadCartelera();
+        } else if (window.location.hash.startsWith('#/show/')) {
+            const id = window.location.hash.split('/').pop();
+            loadShowDetail(id);
+        } else if (window.location.hash === '#/contacto') {
+            setupContactoForm();
+        } else if (window.location.hash === '#/admin') {
+            setupAdminForm();
+            loadAdminShows();
+        }
+    } catch (error) {
+        console.error('Error in renderView:', error);
+        const app = document.getElementById('app');
+        if (app) {
+            app.innerHTML = '<p>Error al cargar la página. Por favor, recargue.</p>';
+        }
     }
 }
 
-window.addEventListener('popstate', renderView);
-window.addEventListener('DOMContentLoaded', renderView);
+window.addEventListener('popstate', () => {
+    console.log('Popstate event triggered'); // Depuración
+    renderView();
+});
 
-// Manejar navegación para los enlaces
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event triggered'); // Depuración
+    renderView();
+
+    // Manejar navegación para los enlaces
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
@@ -200,11 +221,11 @@ function showDetailView(id) {
 // Configurar el formulario del Newsletter
 function setupNewsletterForm() {
     const form = document.getElementById('newsletter-form');
-    if (form) { // Asegurarse de que el formulario exista
+    if (form) {
         form.addEventListener('submit', async e => {
             e.preventDefault();
             const formData = new FormData(form);
-            formData.append('register', 'true'); // Añadir el campo register para que el PHP lo reconozca
+            formData.append('register', 'true');
 
             try {
                 const response = await fetch('guardar.php', {
@@ -227,8 +248,7 @@ function setupNewsletterForm() {
                         timer: 2000,
                         timerProgressBar: true,
                     }).then(() => {
-                        form.reset(); // Limpiar el formulario
-                        // No hacemos navigateTo porque queremos quedarnos en el home
+                        form.reset();
                     });
                 } else {
                     Swal.fire({
@@ -262,9 +282,8 @@ function loadNextShow() {
         })
         .then(response => {
             const content = document.getElementById('next-show-content');
-            if (!content) return; // Evitar errores si el elemento no existe
+            if (!content) return;
 
-            // Verificar si la respuesta indica éxito y si hay datos
             if (response.success && response.data) {
                 const show = response.data;
                 content.innerHTML = `
@@ -283,7 +302,6 @@ function loadNextShow() {
                     </div>
                 `;
             } else {
-                // Si no hay shows, mostrar un mensaje por defecto
                 content.innerHTML = `
                     <p style="text-align: center; color: #666;">No hay espectáculos próximos disponibles.</p>
                 `;
@@ -314,16 +332,14 @@ function loadCartelera() {
             const monthSelect = document.getElementById('month-select');
             const searchInput = document.getElementById('search-input');
 
-            if (!container || !monthSelect || !searchInput) return; // Evitar errores si los elementos no existen
+            if (!container || !monthSelect || !searchInput) return;
 
-            // Llenar meses únicos
             const months = [...new Set(shows.map(show => show.mes))];
             monthSelect.innerHTML = '<option value="">Seleccionar mes</option>';
             months.forEach(month => {
                 monthSelect.innerHTML += `<option value="${month}">${month}</option>`;
             });
 
-            // Mostrar espectáculos
             function renderShows(filter = '', month = '') {
                 const filteredShows = shows.filter(show => {
                     const matchesSearch = show.name.toLowerCase().includes(filter.toLowerCase());
@@ -347,7 +363,6 @@ function loadCartelera() {
 
             renderShows();
 
-            // Filtrado
             searchInput.addEventListener('input', () => {
                 renderShows(searchInput.value, monthSelect.value);
             }, { once: true });

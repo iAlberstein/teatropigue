@@ -261,19 +261,10 @@ function setupNewsletterForm() {
 // Cargar el próximo espectáculo
 function loadNextShow() {
     fetch('api/get_next_show.php')
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
-            }
-            return res.json();
-        })
-        .then(response => {
-            const content = document.getElementById('next-show-content');
-            if (!content) return; // Evitar errores si el elemento no existe
-
-            // Verificar si la respuesta indica éxito y si hay datos
-            if (response.success && response.data) {
-                const show = response.data;
+        .then(res => res.json())
+        .then(show => {
+            if (show) {
+                const content = document.getElementById('next-show-content');
                 content.innerHTML = `
                     <a href="#/show/${show.id_show}">
                         <picture>
@@ -283,25 +274,11 @@ function loadNextShow() {
                     </a>
                     <div class="banner-info">
                         <h2>${show.name}</h2>
-                        <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                        <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora.substring(0, 5)}</p>
                         <a href="#/show/${show.id_show}">
                             <button class="buy-button">Comprar entradas</button>
                         </a>
                     </div>
-                `;
-            } else {
-                // Si no hay shows, mostrar un mensaje por defecto
-                content.innerHTML = `
-                    <p style="text-align: center; color: #666;">No hay espectáculos próximos disponibles.</p>
-                `;
-            }
-        })
-        .catch(error => {
-            console.error('Error al cargar el próximo espectáculo:', error);
-            const content = document.getElementById('next-show-content');
-            if (content) {
-                content.innerHTML = `
-                    <p style="text-align: center; color: #666;">Error al cargar el próximo espectáculo.</p>
                 `;
             }
         });

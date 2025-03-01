@@ -1,14 +1,24 @@
 <?php
+// Habilitar la visualización de errores para depuración
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Asegurarse de que siempre devolvamos JSON
 header('Content-Type: application/json');
 
 // Incluir PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../lib/PHPMailer/src/Exception.php';
-require '../lib/PHPMailer/src/PHPMailer.php';
-require '../lib/PHPMailer/src/SMTP.php';
-require '../config/config.php';
+try {
+    require '../lib/PHPMailer/src/Exception.php';
+    require '../lib/PHPMailer/src/PHPMailer.php';
+    require '../lib/PHPMailer/src/SMTP.php';
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => 'Error al cargar PHPMailer: ' . $e->getMessage()]);
+    exit;
+}
 
 $response = ['success' => false, 'message' => ''];
 

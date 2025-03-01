@@ -11,10 +11,22 @@ header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+// Usar rutas absolutas para evitar problemas
+$basePath = dirname(__DIR__); // Esto sube un nivel desde /api/ a /teatropigue/
+$phpMailerPath = $basePath . '/lib/PHPMailer/src/';
+
+// Verificar si los archivos existen antes de incluirlos
+if (!file_exists($phpMailerPath . 'Exception.php') ||
+    !file_exists($phpMailerPath . 'PHPMailer.php') ||
+    !file_exists($phpMailerPath . 'SMTP.php')) {
+    echo json_encode(['success' => false, 'message' => 'Archivos de PHPMailer no encontrados en ' . $phpMailerPath]);
+    exit;
+}
+
 try {
-    require '../lib/PHPMailer/src/Exception.php';
-    require '../lib/PHPMailer/src/PHPMailer.php';
-    require '../lib/PHPMailer/src/SMTP.php';
+    require $phpMailerPath . 'Exception.php';
+    require $phpMailerPath . 'PHPMailer.php';
+    require $phpMailerPath . 'SMTP.php';
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Error al cargar PHPMailer: ' . $e->getMessage()]);
     exit;
@@ -56,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->Port = 465;
 
         // Configurar el remitente y destinatario
-        $mail->setFrom($email, $name); // El correo del usuario como remitente
-        $mail->addAddress('teatropigue@gmail.com', 'Teatro Español Pigüé'); // Tu correo como destinatario
+        $mail->setFrom($email, $name);
+        $mail->addAddress('teatropigue@gmail.com', 'Teatro Español Pigüé');
 
         // Configurar el contenido del correo
         $mail->isHTML(false);

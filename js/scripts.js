@@ -30,10 +30,37 @@ function renderView() {
     const { handler, params } = parseRoute();
     const app = document.getElementById('app');
     app.innerHTML = handler(...params);
+
+    // Lógica específica según la vista después de renderizar
+    if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
+        loadNextShow();
+        setupNewsletterForm();
+    } else if (window.location.hash.startsWith('#/cartelera')) {
+        loadCartelera();
+    } else if (window.location.hash.startsWith('#/show/')) {
+        const id = window.location.hash.split('/').pop();
+        loadShowDetail(id);
+    } else if (window.location.hash === '#/contacto') {
+        setupContactoForm();
+    } else if (window.location.hash === '#/admin') {
+        setupAdminForm();
+        loadAdminShows();
+    }
 }
 
 window.addEventListener('popstate', renderView);
 window.addEventListener('DOMContentLoaded', renderView);
+
+// Manejar navegación para los enlaces
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const path = link.getAttribute('href').slice(1);
+            navigateTo(path);
+        });
+    });
+});
 
 // Vistas
 function homeView() {
@@ -170,40 +197,6 @@ function showDetailView(id) {
     `;
 }
 
-// Lógica dinámica después de cargar las vistas
-document.addEventListener('DOMContentLoaded', () => {
-    // Manejar navegación
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', e => {
-            e.preventDefault();
-            const path = link.getAttribute('href').slice(1);
-            navigateTo(path);
-        });
-    });
-
-    // Lógica específica para cada vista
-    document.getElementById('app').addEventListener('DOMSubtreeModified', () => {
-        if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
-            loadNextShow();
-            setupNewsletterForm(); // Añadir configuración del formulario del Newsletter
-        }
-        if (window.location.hash.startsWith('#/cartelera')) {
-            loadCartelera();
-        }
-        if (window.location.hash.startsWith('#/show/')) {
-            const id = window.location.hash.split('/').pop();
-            loadShowDetail(id);
-        }
-        if (window.location.hash === '#/contacto') {
-            setupContactoForm();
-        }
-        if (window.location.hash === '#/admin') {
-            setupAdminForm();
-            loadAdminShows();
-        }
-    });
-});
-
 // Configurar el formulario del Newsletter
 function setupNewsletterForm() {
     const form = document.getElementById('newsletter-form');
@@ -254,7 +247,7 @@ function setupNewsletterForm() {
                     confirmButtonText: 'OK',
                 });
             }
-        });
+        }, { once: true });
     }
 }
 
@@ -310,11 +303,18 @@ function loadNextShow() {
 // Cargar cartelera
 function loadCartelera() {
     fetch('api/get_shows.php')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
         .then(shows => {
             const container = document.getElementById('shows-container');
             const monthSelect = document.getElementById('month-select');
             const searchInput = document.getElementById('search-input');
+
+            if (!container || !monthSelect || !searchInput) return; // Evitar errores si los elementos no existen
 
             // Llenar meses únicos
             const months = [...new Set(shows.map(show => show.mes))];
@@ -333,10 +333,10 @@ function loadCartelera() {
 
                 container.innerHTML = filteredShows.map(show => `
                     <div class="show-card">
-                        <img src="${show.image}" alt="${show.name}" class="show-image">
+                        ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
                         <div class="show-info">
                             <h3>${show.name}</h3>
-                            <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })} <br> ${show.hora.substring(0, 5)}</p>
+                            <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
                             <a href="#/show/${show.id_show}">
                                 <button>+ Info</button>
                             </a>
@@ -350,22 +350,36 @@ function loadCartelera() {
             // Filtrado
             searchInput.addEventListener('input', () => {
                 renderShows(searchInput.value, monthSelect.value);
-            });
+            }, { once: true });
             monthSelect.addEventListener('change', () => {
                 renderShows(searchInput.value, monthSelect.value);
-            });
+            }, { once: true });
+        })
+        .catch(error => {
+            console.error('Error al cargar la cartelera:', error);
+            const container = document.getElementById('shows-container');
+            if (container) {
+                container.innerHTML = '<p>Error al cargar los espectáculos.</p>';
+            }
         });
 }
 
 // Cargar detalle del espectáculo
 function loadShowDetail(id) {
     fetch(`api/get_show.php?id=${id}`)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
         .then(show => {
             const content = document.getElementById('show-detail-content');
+            if (!content) return;
+
             content.innerHTML = `
                 <div class="show-image-container">
-                    <img src="${show.image}" alt="${show.name}" class="show-image">
+                    ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
                 </div>
                 <div class="show-info-container">
                     <h2>${show.name}</h2>
@@ -373,18 +387,27 @@ function loadShowDetail(id) {
                 </div>
                 <div class="show-extra-container">
                     <p><strong>Fecha:</strong> ${new Date(show.date).toLocaleDateString('es-ES')}</p>
-                    <p><strong>Hora:</strong> ${show.hora.substring(0, 5)} hs</p>
-                    <a href="${show.link.startsWith('http') ? show.link : 'https://' + show.link}" target="_blank" rel="noopener noreferrer">
+                    <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
+                    <a href="${show.link?.startsWith('http') ? show.link : 'https://' + show.link}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>
                     </a>
                 </div>
             `;
+        })
+        .catch(error => {
+            console.error('Error al cargar el detalle del espectáculo:', error);
+            const content = document.getElementById('show-detail-content');
+            if (content) {
+                content.innerHTML = '<p>Error al cargar el detalle del espectáculo.</p>';
+            }
         });
 }
 
 // Configurar formulario de contacto
 function setupContactoForm() {
     const form = document.getElementById('contacto-form');
+    if (!form) return;
+
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(form);
@@ -415,6 +438,7 @@ function setupContactoForm() {
                 });
             }
         } catch (error) {
+            console.error('Error al enviar el mensaje:', error);
             Swal.fire({
                 title: 'Error',
                 text: 'Error al enviar el mensaje. Intente nuevamente.',
@@ -422,12 +446,14 @@ function setupContactoForm() {
                 confirmButtonText: 'OK',
             });
         }
-    });
+    }, { once: true });
 }
 
 // Configurar formulario de admin
 function setupAdminForm() {
     const form = document.getElementById('admin-form');
+    if (!form) return;
+
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(form);
@@ -449,19 +475,27 @@ function setupAdminForm() {
                 Swal.fire('Error', result.message, 'error');
             }
         } catch (error) {
+            console.error('Error al guardar el espectáculo:', error);
             Swal.fire('Error', 'Error al guardar el espectáculo', 'error');
         }
-    });
+    }, { once: true });
 }
 
 // Cargar espectáculos en el admin
 function loadAdminShows() {
     fetch('api/get_shows.php')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
         .then(shows => {
             const container = document.getElementById('admin-shows-container');
             const searchInput = document.getElementById('admin-search');
             const monthSelect = document.getElementById('admin-month-select');
+
+            if (!container || !searchInput || !monthSelect) return;
 
             const months = [...new Set(shows.map(show => show.mes))];
             monthSelect.innerHTML = '<option value="">Seleccionar mes</option>';
@@ -478,7 +512,7 @@ function loadAdminShows() {
 
                 container.innerHTML = filteredShows.map(show => `
                     <div class="show-card">
-                        <img src="${show.image}" alt="${show.name}" class="show-image">
+                        ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
                         <div class="show-info">
                             <h3>${show.name}</h3>
                             <p>${show.description}</p>
@@ -493,26 +527,41 @@ function loadAdminShows() {
 
             searchInput.addEventListener('input', () => {
                 renderAdminShows(searchInput.value, monthSelect.value);
-            });
+            }, { once: true });
             monthSelect.addEventListener('change', () => {
                 renderAdminShows(searchInput.value, monthSelect.value);
-            });
+            }, { once: true });
+        })
+        .catch(error => {
+            console.error('Error al cargar espectáculos:', error);
+            const container = document.getElementById('admin-shows-container');
+            if (container) {
+                container.innerHTML = '<p>Error al cargar los espectáculos.</p>';
+            }
         });
 }
 
 function editShow(id) {
     fetch(`api/get_show.php?id=${id}`)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
         .then(show => {
             document.getElementById('name').value = show.name;
             document.getElementById('description').value = show.description;
             document.getElementById('price').value = show.price;
             document.getElementById('mes').value = show.mes;
             document.getElementById('date').value = show.date;
-            document.getElementById('hora').value = show.hora;
+            document.getElementById('hora').value = show.hora || '';
             document.getElementById('link').value = show.link;
             document.getElementById('edit-id').value = show.id_show;
             document.getElementById('admin-title').textContent = 'Modificar Espectáculo';
+        })
+        .catch(error => {
+            console.error('Error al cargar el espectáculo para edición:', error);
         });
 }
 
@@ -531,7 +580,12 @@ function deleteShow(id) {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `id=${id}`,
             })
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+                    }
+                    return res.json();
+                })
                 .then(result => {
                     if (result.success) {
                         Swal.fire('Éxito', result.message, 'success');
@@ -539,6 +593,10 @@ function deleteShow(id) {
                     } else {
                         Swal.fire('Error', result.message, 'error');
                     }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar el espectáculo:', error);
+                    Swal.fire('Error', 'Error al eliminar el espectáculo', 'error');
                 });
         }
     });

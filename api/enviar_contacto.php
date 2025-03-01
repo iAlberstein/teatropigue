@@ -1,5 +1,5 @@
 <?php
-// Habilitar la visualización de errores para depuración
+// Habilitar la visualización de errores para depuración (puedes quitar esto en producción)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -7,20 +7,29 @@ error_reporting(E_ALL);
 // Asegurarse de que siempre devolvamos JSON
 header('Content-Type: application/json');
 
+// Incluir archivo de configuración para credenciales
+$basePath = dirname(__DIR__); // Esto sube un nivel desde /api/ a /teatropigue/
+$configPath = $basePath . '/config/config.php';
+if (!file_exists($configPath)) {
+    echo json_encode(['success' => false, 'message' => 'Archivo de configuración no encontrado en ' . $configPath]);
+    exit;
+}
+require $configPath;
+
 // Incluir PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Usar rutas absolutas para evitar problemas
-$basePath = dirname(__DIR__); // Esto sube un nivel desde /api/ a /teatropigue/
+// Usar rutas absolutas para PHPMailer
 $phpMailerPath = $basePath . '/lib/PHPMailer/src/';
 
-// Verificar si los archivos existen antes de incluirlos
-if (!file_exists($phpMailerPath . 'Exception.php') ||
-    !file_exists($phpMailerPath . 'PHPMailer.php') ||
-    !file_exists($phpMailerPath . 'SMTP.php')) {
-    echo json_encode(['success' => false, 'message' => 'Archivos de PHPMailer no encontrados en ' . $phpMailerPath]);
-    exit;
+// Verificar si los archivos de PHPMailer existen antes de incluirlos
+$requiredFiles = ['Exception.php', 'PHPMailer.php', 'SMTP.php'];
+foreach ($requiredFiles as $file) {
+    if (!file_exists($phpMailerPath . $file)) {
+        echo json_encode(['success' => false, 'message' => "Archivo de PHPMailer no encontrado: $file en $phpMailerPath"]);
+        exit;
+    }
 }
 
 try {
@@ -62,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = EMAIL_USER; // Usar la constante
-        $mail->Password = EMAIL_PASS; // Usar la constante
+        $mail->Username = EMAIL_USER; // Usar la constante definida en config.php
+        $mail->Password = EMAIL_PASS; // Usar la constante definida en config.php
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
         $mail->Port = 465;
 

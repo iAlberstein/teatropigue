@@ -297,7 +297,7 @@ function loadNextShow() {
                 content.innerHTML = `
                     <a href="#/show/${show.id_show}">
                         <picture>
-                            <source media="(min-width: 750px)" srcSet="${show.bannerImage || show.image}">
+                            <source media="(min-width: 750px)" srcSet="uploads/${show.bannerImage || show.image}">
                             <img src="uploads/${show.image}" alt="${show.name}" class="banner-image">
                         </picture>
                     </a>

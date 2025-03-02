@@ -302,6 +302,7 @@ function loadNextShow() {
 
                 content.innerHTML = `
                     <a href="#/show/${show.id_show}">
+                        <h2>PRÓXIMAMENTE</h2>
                         <picture>
                             <source media="(min-width: 750px)" srcset="${bannerImage}">
                             <img src="${fallbackImage}" alt="${show.name}" class="banner-image">

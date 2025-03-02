@@ -4,7 +4,7 @@ const routes = {
     '/cartelera': carteleraView,
     '/historia': historiaView,
     '/contacto': contactoView,
-    '/admin': adminView,
+    '/admin33860988': adminView,
     '/show/:id': showDetailView
 };
 

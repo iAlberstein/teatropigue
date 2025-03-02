@@ -61,6 +61,28 @@ textarea {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para el menú colapsado en pantallas pequeñas */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+
+      padding: 10px 0;
+  }
+
+  .navbar-nav .nav-item {
+
+  }
+
+  .navbar-nav .nav-item:last-child {
+      border-bottom: none; /* Sin borde en el último elemento */
+  }
+
+  .navbar-nav .nav-link {
+      padding: 10px 15px;
+      text-align: center; /* Centra el texto en móvil */
+      color: #d4d4d4;
+  }
+}
+
 .logoteatro {
   width: 100px;
 }
@@ -513,47 +535,75 @@ footer {
   }
 }
 
-/* Historia */
+/* Estilos generales */
 .historia-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 20px;
-  padding: 40px;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.historia-content {
-  flex: 2;
-  text-align: justify;
+.historia-section {
+  margin-bottom: 2rem;
 }
 
-.historia-content h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.historia-content p {
-  font-size: 16px;
+.historia-text {
   line-height: 1.6;
-  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.historia-text h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.historia-text p {
+  margin-bottom: 1rem;
 }
 
 .historia-image-container {
-  flex: none;
-  width: 250px;
   display: flex;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
 }
 
 .historia-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes para pantallas grandes (≥768px) */
+@media (min-width: 768px) {
+  .historia-text {
+      padding-right: 20px; /* Espacio entre texto e imagen en la sección de historia */
+  }
+
+  .ubicacion-section .historia-text {
+      padding-left: 20px; /* Espacio entre texto e imagen en la sección de ubicación */
+  }
+
+  .historia-image-container {
+      padding: 0; /* Elimina padding adicional en pantallas grandes */
+  }
+}
+
+/* Ajustes para pantallas pequeñas (<768px) */
+@media (max-width: 767.98px) {
+  .historia-text,
+  .historia-image-container {
+      margin-bottom: 1.5rem; /* Espacio entre texto e imagen en orden vertical */
+  }
+
+  .ubicacion-section .historia-text {
+      padding-left: 0; /* Elimina padding adicional en pantallas pequeñas */
+  }
+
+  .historia-section {
+      flex-direction: column;
+  }
 }
 
 /* Footer */

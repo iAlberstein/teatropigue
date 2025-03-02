@@ -28,7 +28,7 @@ function parseRoute() {
     return { handler: routes['/'], params: [] };
 }
 
-// En renderView, agregamos un pequeño retraso para evitar problemas en móviles
+// En // En renderView, agregamos un pequeño retraso para evitar problemas en móviles
 function renderView() {
     try {
         console.log('Rendering view...');
@@ -58,6 +58,16 @@ function renderView() {
                 setupAdminForm();
                 loadAdminShows();
             }
+
+            // Configurar los eventos del navbar después de renderizar
+            setupNavbarCollapse();
+
+            // Reasignar eventos para los enlaces
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.removeEventListener('click', handleLinkClick);
+                link.addEventListener('click', handleLinkClick);
+            });
         }, 100);
     } catch (error) {
         console.error('Error in renderView:', error);
@@ -77,19 +87,33 @@ window.addEventListener('popstate', () => {
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded event triggered');
     renderView();
-
-    // Limpiamos y reasignamos eventos para los enlaces
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.removeEventListener('click', handleLinkClick); // Evitamos duplicados
-        link.addEventListener('click', handleLinkClick);
-    });
 });
 
 function handleLinkClick(e) {
     e.preventDefault();
     const path = e.currentTarget.getAttribute('href').slice(1);
     navigateTo(path);
+}
+
+// Función para cerrar el menú colapsado al hacer clic en un enlace
+function setupNavbarCollapse() {
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const navbarCollapse = document.querySelector('#navbarNav');
+
+    navLinks.forEach(link => {
+        // Limpiamos eventos previos para evitar duplicados
+        link.removeEventListener('click', closeNavbarOnClick);
+        link.addEventListener('click', closeNavbarOnClick);
+    });
+
+    function closeNavbarOnClick() {
+        if (navbarCollapse.classList.contains('show')) {
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                toggle: false
+            });
+            bsCollapse.hide();
+        }
+    }
 }
 
 // Vistas
@@ -134,14 +158,34 @@ function carteleraView() {
 function historiaView() {
     return `
         <div class="container mt-4 historia-container">
-            <div class="historia-content">
-                <h1>HISTORIA</h1>
-                <p><strong>Un edificio único, con una historia centenaria.</strong></p>
-                <p>La Sociedad Española de Socorros Mutuos de Pigüé fue fundada el 14 de junio de 1894...</p>
-                <!-- Resto del contenido de Historia.js -->
+            <!-- Sección Historia -->
+            <div class="row historia-section">
+                <div class="col-md-6 historia-text">
+                    <h1 class="text-center mb-4">HISTORIA</h1>
+                    <h2><strong>Un edificio único,<br> con una historia centenaria.</strong></h2>
+                    <p>La Sociedad Española de Socorros Mutuos de Pigüé fue fundada el 14 de junio de 1894, apenas diez años después de la creación de la ciudad. Treinta años más tarde, se emprendió una gran iniciativa: la construcción de un teatro, convirtiéndose en la única sala concebida y edificada desde el inicio de la ciudad con ese propósito, <strong>inaugurado el 26 de abril de 1926.</strong></p>
+                    <p><strong>Declarado monumento histórico provincial</strong> mediante la Ley 11535 en mayo de 1994, el edificio del Teatro Español fue diseñado por el ingeniero Marseillán, oriundo de Bahía Blanca, y construido por la empresa de Don Domingo Oresti. Este destacado empresario, reconocido por su labor en numerosas obras particulares e institucionales en Pigüé y la región, dejó un legado que aún es visible en la actualidad.</p>
+                    <p>El teatro, con su clásico formato en herradura, cuenta con palcos altos y bajos, palcos laterales y platea, albergando hasta <strong>446 espectadores.</strong> Su extraordinaria acústica lo ha consolidado como un espacio de referencia para la cultura y las artes escénicas.</p>
+                    <p>Entre 2021 y 2024, la Sociedad Española estableció un convenio de uso con la Municipalidad de Saavedra-Pigüé, retomando una idea impulsada por Jorge Capotosti, quien no pudo concretarla en vida durante su gestión como concejal y secretario de cultura municipal. No obstante, a partir de 2025, la Sociedad Española decidió retomar la administración plena del teatro, con el propósito de focalizarse en la <strong>conmemoración del centenario de la construcción del edificio.</strong> En este nuevo ciclo, la gestión del espacio se encuentra a cargo de Anita Lopez Holzmann y Bruno Alberstein.</p>
+                    <p>De esta forma, se proyecta la puesta en valor del edificio y se garantiza el acceso transversal para toda la comunidad artística, reafirmando su papel fundamental en la vida cultural de Pigüé y la región.</p>
+                </div>
+                <div class="col-md-6 historia-image-container">
+                    <img src="images/teatropanoramica.jpg" alt="Teatro Español Panorámica" class="historia-image">
+                </div>
             </div>
-            <div class="historia-image-container">
-                <img src="images/teatropanoramica.jpg" alt="Teatro Español Panorámica" class="historia-image">
+
+            <!-- Sección Ubicación -->
+            <div class="row historia-section ubicacion-section">
+                <div class="col-md-6 historia-image-container order-md-1 order-2">
+                    <img src="images/mapaPBA.png" alt="Mapa de la Provincia de Buenos Aires" class="historia-image">
+                </div>
+                <div class="col-md-6 historia-text order-md-2 order-1">
+                    <h1 class="text-center mb-4">UBICACIÓN</h1>
+                    <h2><strong>En el sudoeste,<br> el lugar del encuentro.</strong></h2>
+                    <p><strong>La localidad de Pigüé, cabecera del Partido de Saavedra</strong>, se encuentra ubicada en el cruce de las rutas Nacional Nº 33 y Provincial Nº 67, lo que denota una <strong>posición estratégica</strong> no sólo a nivel local y regional, sino también nacional.</p>
+                    <p>La ruta Nacional Nº 33 constituye un eje natural de unión hacia el norte (Trenque Lauquen, Rosario) hacia el sur (Bahía Blanca, Viedma) y las posibles conexiones con las rutas nacionales Nº 3, 22 y 35. En tanto, la ruta Provincial Nº 67, es la conexión hacia el oeste con Puán y Santa Rosa (La Pampa) y hacia el este con Coronel Suárez y el centro de la provincia de Buenos Aires, mediante las rutas nacionales 226 y 228, y la 76 y 85 de la red vial provincial.</p>
+                    <p>El Teatro Español de Pigüé se encuentra ubicado en la <strong>calle España 120</strong>, entre las calles Manuel Belgrano y Cdad. de Rodez, solo una cuadra de la Av. E. Casey, una de las arterias principales de la ciudad.</p>
+                </div>
             </div>
         </div>
     `;

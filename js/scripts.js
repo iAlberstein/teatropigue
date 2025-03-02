@@ -409,18 +409,28 @@ function loadCartelera() {
                     return matchesSearch && matchesMonth;
                 });
 
-                container.innerHTML = filteredShows.map(show => `
-                    <div class="show-card">
-                        ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
-                        <div class="show-info">
-                            <h3>${show.name}</h3>
-                            <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-                            <a href="#/show/${show.id_show}">
-                                <button>+ Info</button>
-                            </a>
+                container.innerHTML = filteredShows.map(show => {
+                    // Parsear la fecha manualmente para evitar problemas de zona horaria
+                    let formattedDate = 'Fecha no disponible';
+                    if (show.date) {
+                        const [year, month, day] = show.date.split('-');
+                        const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+                        formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
+                    }
+
+                    return `
+                        <div class="show-card">
+                            ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
+                            <div class="show-info">
+                                <h3>${show.name}</h3>
+                                <p>${formattedDate} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                                <a href="#/show/${show.id_show}">
+                                    <button>+ Info</button>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             renderShows();

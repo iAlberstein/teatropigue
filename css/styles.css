@@ -246,6 +246,7 @@ footer {
 
 .show-description {
   white-space: pre-wrap;
+  text-align: justify;
 }
 
 /* Contacto */

@@ -389,7 +389,7 @@ footer {
 /* Show Detail */
 .show-detail-container {
   display: flex;
-  flex-wrap: nowrap; /* Evita que las columnas se envuelvan prematuramente */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
   gap: 20px; /* Espacio entre las columnas/filas */
   padding: 40px;
   max-width: 1200px;
@@ -401,6 +401,7 @@ footer {
 .show-info-container,
 .show-extra-container {
   flex: 1; /* Cada contenedor toma el mismo espacio disponible */
+  min-width: 250px; /* Ancho mínimo para evitar que se compriman demasiado */
 }
 
 /* Estilo específico para cada contenedor */
@@ -452,7 +453,7 @@ footer {
   background-color: #14a06d;
 }
 
-/* Media Query para pantallas grandes (3 columnas) */
+/* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
 @media (min-width: 769px) {
   .show-detail-container {
     flex-direction: row; /* Muestra en columnas */
@@ -473,11 +474,10 @@ footer {
   }
 }
 
-/* Media Query para pantallas pequeñas (celulares) */
+/* Media Query para pantallas pequeñas (celulares: apilados verticalmente) */
 @media (max-width: 768px) {
   .show-detail-container {
     flex-direction: column; /* Apila los elementos verticalmente */
-    flex-wrap: wrap; /* Permite envolver si es necesario */
     align-items: center;
     text-align: center;
   }
@@ -487,16 +487,26 @@ footer {
   .show-extra-container {
     flex: none; /* Desactiva el crecimiento automático */
     width: 100%; /* Toma todo el ancho disponible */
+    min-width: 0; /* Restablece el ancho mínimo */
+  }
+
+  .show-image-container {
+    order: 1; /* Arriba */
+  }
+
+  .show-info-container {
+    order: 2; /* Centro */
+  }
+
+  .show-extra-container {
+    order: 3; /* Abajo */
+    text-align: center; /* Centra el contenido en móviles */
   }
 
   .show-image {
     width: 100%; /* En móviles, la imagen toma todo el ancho */
     max-width: 300px; /* Limita el ancho máximo a 300px */
     margin: 0 auto; /* Centra la imagen */
-  }
-
-  .show-extra-container {
-    text-align: center; /* Centra el contenido en móviles */
   }
 }
 

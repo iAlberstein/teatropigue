@@ -489,9 +489,17 @@ function setupAdminForm() {
         const id = document.getElementById('edit-id').value;
 
         // Imprimir los datos del formulario para depuración
-        console.log('Datos del formulario:');
+        console.log('Datos del formulario antes de enviar:');
+        const formDataObj = {};
         for (let [key, value] of formData.entries()) {
+            formDataObj[key] = value;
             console.log(`${key}: ${value}`);
+        }
+
+        // Validar que los campos requeridos tengan valores
+        if (!formDataObj.name || !formDataObj.mes || !formDataObj.date || !formDataObj.hora || !formDataObj.link) {
+            Swal.fire('Error', 'Por favor, complete todos los campos requeridos', 'error');
+            return;
         }
 
         try {
@@ -500,12 +508,7 @@ function setupAdminForm() {
                 body: formData,
             });
 
-            // Obtener la respuesta como texto para depuración
-            const text = await response.text();
-            console.log('Respuesta de save_show.php:', text);
-
-            // Parsear la respuesta como JSON
-            const result = JSON.parse(text);
+            const result = await response.json();
             if (result.success) {
                 Swal.fire('Éxito', result.message, 'success');
                 form.reset();

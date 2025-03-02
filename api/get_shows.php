@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 // Asegurarse de que siempre devolvamos JSON
 header('Content-Type: application/json');
 
-$response = ['success' => false, 'message' => ''];
+$response = ['success' => false, 'message' => '', 'data' => []];
 
 // Incluir archivo de conexión
 $basePath = dirname(__DIR__); // Esto sube un nivel desde /api/ a /teatropigue/
@@ -29,7 +29,7 @@ try {
 
 // Verificar conexión a la base de datos
 if ($conex->connect_error) {
-    $response['message'] = 'Error de conexión a la base de datos: ' . $conasc($conex->connect_error);
+    $response['message'] = 'Error de conexión a la base de datos: ' . $conex->connect_error;
     echo json_encode($response);
     exit;
 }

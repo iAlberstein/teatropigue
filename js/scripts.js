@@ -335,7 +335,13 @@ function loadCartelera() {
             }
             return res.json();
         })
-        .then(shows => {
+        .then(response => {
+            // Asegurarnos de que response.data exista y sea un array
+            if (!response.success || !Array.isArray(response.data)) {
+                throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
+            }
+
+            const shows = response.data; // Extraemos el array de data
             const container = document.getElementById('shows-container');
             const monthSelect = document.getElementById('month-select');
             const searchInput = document.getElementById('search-input');
@@ -382,7 +388,7 @@ function loadCartelera() {
             console.error('Error al cargar la cartelera:', error);
             const container = document.getElementById('shows-container');
             if (container) {
-                container.innerHTML = '<p>Error al cargar los espectáculos.</p>';
+                container.innerHTML = `<p>Error al cargar los espectáculos: ${error.message}</p>`;
             }
         });
 }

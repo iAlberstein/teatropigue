@@ -435,7 +435,7 @@ footer {
 #show-detail-content {
   display: flex;
   flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
-  gap: 20px; /* Espacio entre las columnas/filas */
+  gap: 40px; /* Aumentamos el espacio entre contenedores a 40px (puedes ajustar este valor) */
 }
 
 /* Contenedores internos */
@@ -474,6 +474,11 @@ footer {
 .show-extra-container {
   flex: 1; /* Menos espacio en la derecha */
   text-align: left;
+  background-color: white; /* Fondo blanco */
+  border: 1px solid #ccc; /* Contorno gris claro */
+  padding: 20px; /* Espacio interno para que el contorno no esté pegado al contenido */
+  border-radius: 5px; /* Bordes redondeados (opcional) */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave (opcional) */
 }
 
 .show-extra-container p {

@@ -670,6 +670,8 @@ function loadAdminShows() {
                         ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
                         <div class="show-info">
                             <h3>${show.name}</h3>
+                            <h3>${show.date}</h3>
+                            <h3>${show.hora}</h3>
                             <button onclick="editShow(${show.id_show})">Modificar</button>
                             <button onclick="deleteShow(${show.id_show})">Eliminar</button>
                         </div>

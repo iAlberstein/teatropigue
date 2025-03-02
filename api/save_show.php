@@ -35,19 +35,23 @@ if ($conex->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $price = $_POST['price'] ?? 0;
-    $mes = $_POST['mes'] ?? '';
-    $date = $_POST['date'] ?? '';
-    $hora = $_POST['hora'] ?? '';
-    $link = $_POST['link'] ?? '';
-    $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    // Imprimir datos recibidos para depuración
+    error_log("Datos recibidos en POST: " . print_r($_POST, true));
+    error_log("Archivos recibidos: " . print_r($_FILES, true));
+
+    $name = trim($_POST['name'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
+    $mes = trim($_POST['mes'] ?? '');
+    $date = trim($_POST['date'] ?? '');
+    $hora = trim($_POST['hora'] ?? '');
+    $link = trim($_POST['link'] ?? '');
+    $id = isset($_POST['edit-id']) ? intval($_POST['edit-id']) : 0; // Cambiamos 'id' por 'edit-id'
 
     // Manejo de archivos (imagen y bannerImage)
     $image = '';
     $bannerImage = '';
-    $uploadDir = 'uploads/';
+    $uploadDir = $basePath . '/uploads/'; // Usamos ruta absoluta
 
     if (!file_exists($uploadDir)) {
         if (!mkdir($uploadDir, 0777, true)) {
@@ -80,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Actualizar espectáculo existente
             $query = "UPDATE shows SET name = ?, description = ?, price = ?, mes = ?, date = ?, hora = ?, link = ?";
             $params = [$name, $description, $price, $mes, $date, $hora, $link];
-            $paramTypes = str_repeat('s', 7); // name, description, mes, date, hora, link son strings; price es double
+            $paramTypes = 'ssdssss'; // price es double
 
             if ($image) {
                 $query .= ", image = ?";

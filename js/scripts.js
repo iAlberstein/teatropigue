@@ -194,7 +194,7 @@ function historiaView() {
 function contactoView() {
     return `
         <div class="container mt-4 contacto-container">
-            <h2>Contacto</h2>
+            <h1>CONTACTO</h1>
             <form id="contacto-form" class="contacto-form">
                 <div class="form-group">
                     <label for="subject">Asunto:</label>

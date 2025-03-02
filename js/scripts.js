@@ -463,6 +463,14 @@ function loadShowDetail(id) {
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
+            // Parsear la fecha manualmente para evitar problemas de zona horaria
+            let formattedDate = 'Fecha no disponible';
+            if (show.date) {
+                const [year, month, day] = show.date.split('-');
+                const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+                formattedDate = parsedDate.toLocaleDateString('es-ES');
+            }
+
             // Mostrar los datos en la interfaz
             content.innerHTML = `
                 <div class="show-image-container">
@@ -473,7 +481,7 @@ function loadShowDetail(id) {
                     <p class="show-description">${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
-                    <p><strong>Fecha:</strong> ${show.date ? new Date(show.date).toLocaleDateString('es-ES') : 'Fecha no disponible'}</p>
+                    <p><strong>Fecha:</strong> ${formattedDate}</p>
                     <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
                     <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>

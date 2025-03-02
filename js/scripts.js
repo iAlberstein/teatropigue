@@ -462,13 +462,10 @@ function loadShowDetail(id) {
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
+  
             // Parsear la fecha manualmente para evitar problemas de zona horaria
-            let formattedDate = 'Fecha no disponible';
-            if (show.date) {
-                const [year, month, day] = show.date.split('-');
-                const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
-                formattedDate = parsedDate.toLocaleDateString('es-ES');
-            }
+            const [year, month, day] = show.date.split('-');
+            const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
 
             // Mostrar los datos en la interfaz
             content.innerHTML = `

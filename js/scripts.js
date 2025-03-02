@@ -140,7 +140,6 @@ function homeView() {
 function carteleraView() {
     return `
         <div class="container mt-4">
-            <h2>Cartelera de espectáculos</h2>
             <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Buscar espectáculo...">
                 <select id="month-select">

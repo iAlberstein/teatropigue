@@ -389,18 +389,26 @@ footer {
 /* Show Detail */
 .show-detail-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
+  gap: 20px; /* Espacio entre las columnas/filas */
   padding: 40px;
   max-width: 1200px;
   margin: auto;
 }
 
+/* Contenedores internos */
+.show-image-container,
+.show-info-container,
+.show-extra-container {
+  flex: 1; /* Cada contenedor toma el mismo espacio disponible */
+  min-width: 250px; /* Ancho mínimo para evitar que se compriman demasiado */
+}
+
+/* Estilo específico para cada contenedor */
 .show-image-container {
-  flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .show-image {
@@ -411,7 +419,6 @@ footer {
 }
 
 .show-info-container {
-  flex: 2;
   text-align: center;
 }
 
@@ -421,7 +428,6 @@ footer {
 }
 
 .show-extra-container {
-  flex: 1;
   text-align: left;
 }
 
@@ -442,6 +448,52 @@ footer {
 
 .buy-button:hover {
   background-color: #14a06d;
+}
+
+/* Media Query para pantallas pequeñas (celulares) */
+@media (max-width: 768px) {
+  .show-detail-container {
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center;
+    text-align: center;
+  }
+
+  .show-image-container,
+  .show-info-container,
+  .show-extra-container {
+    flex: none; /* Desactiva el crecimiento automático */
+    width: 100%; /* Toma todo el ancho disponible */
+    min-width: 0; /* Restablece el ancho mínimo */
+  }
+
+  .show-extra-container {
+    text-align: center; /* Centra el contenido en móviles */
+  }
+
+  .show-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Media Query para pantallas grandes (3 columnas) */
+@media (min-width: 769px) {
+  .show-detail-container {
+    flex-direction: row; /* Muestra en columnas */
+    justify-content: space-between;
+  }
+
+  .show-image-container {
+    order: 1; /* Izquierda */
+  }
+
+  .show-info-container {
+    order: 2; /* Centro */
+  }
+
+  .show-extra-container {
+    order: 3; /* Derecha */
+  }
 }
 
 /* Historia */

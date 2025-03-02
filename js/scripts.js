@@ -402,22 +402,31 @@ function loadShowDetail(id) {
             }
             return res.json();
         })
-        .then(show => {
+        .then(response => {
+            console.log('Respuesta de get_show.php:', response); // Depuración
+
+            // Verificar si la respuesta tiene éxito y contiene datos
+            if (!response.success || !response.data) {
+                throw new Error(response.message || 'No se encontraron datos del espectáculo');
+            }
+
+            const show = response.data; // Extraemos los datos del espectáculo
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
+            // Mostrar los datos en la interfaz
             content.innerHTML = `
                 <div class="show-image-container">
-                    ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
+                    ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name || 'Espectáculo'}" class="show-image">` : ''}
                 </div>
                 <div class="show-info-container">
-                    <h2>${show.name}</h2>
-                    <p>${show.description}</p>
+                    <h2>${show.name || 'Nombre no disponible'}</h2>
+                    <p>${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
-                    <p><strong>Fecha:</strong> ${new Date(show.date).toLocaleDateString('es-ES')}</p>
+                    <p><strong>Fecha:</strong> ${show.date ? new Date(show.date).toLocaleDateString('es-ES') : 'Fecha no disponible'}</p>
                     <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
-                    <a href="${show.link?.startsWith('http') ? show.link : 'https://' + show.link}" target="_blank" rel="noopener noreferrer">
+                    <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>
                     </a>
                 </div>
@@ -427,7 +436,7 @@ function loadShowDetail(id) {
             console.error('Error al cargar el detalle del espectáculo:', error);
             const content = document.getElementById('show-detail-content');
             if (content) {
-                content.innerHTML = '<p>Error al cargar el detalle del espectáculo.</p>';
+                content.innerHTML = `<p>Error al cargar el detalle del espectáculo: ${error.message}</p>`;
             }
         });
 }

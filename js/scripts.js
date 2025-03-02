@@ -54,7 +54,7 @@ function renderView() {
                 loadShowDetail(id);
             } else if (window.location.hash === '#/contacto') {
                 setupContactoForm();
-            } else if (window.location.hash === '#/admin') {
+            } else if (window.location.hash === '#/admin33860988') {
                 setupAdminForm();
                 loadAdminShows();
             }

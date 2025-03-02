@@ -298,7 +298,7 @@ function loadNextShow() {
                     <a href="#/show/${show.id_show}">
                         <picture>
                             <source media="(min-width: 750px)" srcSet="${show.bannerImage || show.image}">
-                            <img src="${show.image}" alt="${show.name}" class="banner-image">
+                            <img src="uploads/${show.image}" alt="${show.name}" class="banner-image">
                         </picture>
                     </a>
                     <div class="banner-info">
@@ -357,7 +357,7 @@ function loadCartelera() {
 
                 container.innerHTML = filteredShows.map(show => `
                     <div class="show-card">
-                        ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
+                        ${(show.image && show.image !== '') ? `<img src="uploads/${show.image}" alt="${show.name}" class="show-image">` : ''}
                         <div class="show-info">
                             <h3>${show.name}</h3>
                             <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
@@ -402,7 +402,7 @@ function loadShowDetail(id) {
 
             content.innerHTML = `
                 <div class="show-image-container">
-                    ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
+                    ${(show.image && show.image !== '') ? `<img src="uploads/${show.image}" alt="${show.name}" class="show-image">` : ''}
                 </div>
                 <div class="show-info-container">
                     <h2>${show.name}</h2>

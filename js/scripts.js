@@ -519,7 +519,13 @@ function loadAdminShows() {
             }
             return res.json();
         })
-        .then(shows => {
+        .then(response => {
+            // Asegurarnos de que response.data exista y sea un array
+            if (!response.success || !Array.isArray(response.data)) {
+                throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
+            }
+
+            const shows = response.data; // Extraemos el array de data
             const container = document.getElementById('admin-shows-container');
             const searchInput = document.getElementById('admin-search');
             const monthSelect = document.getElementById('admin-month-select');
@@ -541,7 +547,7 @@ function loadAdminShows() {
 
                 container.innerHTML = filteredShows.map(show => `
                     <div class="show-card">
-                        ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
+                        ${(show.image && show.image !== '') ? `<img src="uploads/${show.image}" alt="${show.name}" class="show-image">` : ''}
                         <div class="show-info">
                             <h3>${show.name}</h3>
                             <p>${show.description}</p>
@@ -565,7 +571,7 @@ function loadAdminShows() {
             console.error('Error al cargar espectáculos:', error);
             const container = document.getElementById('admin-shows-container');
             if (container) {
-                container.innerHTML = '<p>Error al cargar los espectáculos.</p>';
+                container.innerHTML = `<p>Error al cargar los espectáculos: ${error.message}</p>`;
             }
         });
 }

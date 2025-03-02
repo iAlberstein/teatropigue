@@ -208,7 +208,7 @@ footer {
 
 .show-info button {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #0c4f42;
   color: white;
   border: none;
   border-radius: 5px;
@@ -217,7 +217,7 @@ footer {
 }
 
 .show-info button:hover {
-  background-color: #0056b3;
+  background-color: #1b8671;
 }
 
 /* Contacto */
@@ -267,7 +267,7 @@ footer {
 
 .contacto-form button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #0c4f42;
   color: white;
   border: none;
   border-radius: 5px;
@@ -277,7 +277,7 @@ footer {
 }
 
 .contacto-form button:hover {
-  background-color: #0056b3;
+  background-color: #1d7f6c;
 }
 
 /* Admin */
@@ -333,7 +333,7 @@ footer {
 
 .admin-tep-left button {
   padding: 12px;
-  background-color: #007bff;
+  background-color: #0c4f42;
   color: white;
   border: none;
   border-radius: 4px;
@@ -343,7 +343,7 @@ footer {
 }
 
 .admin-tep-left button:hover {
-  background-color: #0056b3;
+  background-color: #1b8671;
 }
 
 .admin-tep-right {
@@ -453,7 +453,7 @@ footer {
 }
 
 .buy-button:hover {
-  background-color: #14a06d;
+  background-color: #1b8671;
 }
 
 /* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
@@ -594,14 +594,14 @@ footer .social-icons a:hover {
 
 .boton {
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #0c4f42;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 .boton:hover {
-  background-color: #0056b3;
+  background-color: #1b8671;
 }
 
 /* Media Queries para Responsividad */

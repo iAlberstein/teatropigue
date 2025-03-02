@@ -97,7 +97,7 @@ function homeView() {
     return `
         <div class="container mt-4">
             <div id="next-show-banner" class="banner">
-                <h2>PRÓXIMAMENTE</h2>
+                
                 <div id="next-show-content"></div>
             </div>
             <div class="newsletter">
@@ -295,6 +295,7 @@ function loadNextShow() {
             if (response.success && response.data) {
                 const show = response.data;
                 content.innerHTML = `
+                    <h2>PRÓXIMAMENTE</h2>
                     <a href="#/show/${show.id_show}">
                         <picture>
                             <source media="(min-width: 750px)" srcSet="${show.bannerImage || show.image}">
@@ -310,18 +311,18 @@ function loadNextShow() {
                     </div>
                 `;
             } else {
-                content.innerHTML = `
-                    <p style="text-align: center; color: #666;">No hay espectáculos próximos disponibles.</p>
-                `;
+                // En caso de que no haya espectáculos, simplemente vaciamos el contenido y podemos ocultar el elemento
+                content.innerHTML = '';
+                content.style.display = 'none'; // Opcional: oculta el elemento completamente
             }
         })
         .catch(error => {
             console.error('Error al cargar el próximo espectáculo:', error);
             const content = document.getElementById('next-show-content');
             if (content) {
-                content.innerHTML = `
-                    <p style="text-align: center; color: #666;">Error al cargar el próximo espectáculo.</p>
-                `;
+                // En caso de error, también vaciamos el contenido y podemos ocultar el elemento
+                content.innerHTML = '';
+                content.style.display = 'none'; // Opcional: oculta el elemento completamente
             }
         });
 }

@@ -280,6 +280,7 @@ function setupNewsletterForm() {
 }
 
 // Cargar el próximo espectáculo
+// Cargar el próximo espectáculo
 function loadNextShow() {
     fetch('api/get_next_show.php')
         .then(res => {
@@ -294,12 +295,16 @@ function loadNextShow() {
 
             if (response.success && response.data) {
                 const show = response.data;
+
+                // Validar imágenes y establecer valores predeterminados
+                const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
+                const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg'; // Cambia esto por una imagen por defecto si quieres
+
                 content.innerHTML = `
-                    <h2>PRÓXIMAMENTE</h2>
                     <a href="#/show/${show.id_show}">
                         <picture>
-                            <source media="(min-width: 750px)" srcSet="${show.bannerImage || show.image}">
-                            <img src="${show.image}" alt="${show.name}" class="banner-image">
+                            <source media="(min-width: 750px)" srcset="${bannerImage}">
+                            <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
                         </picture>
                     </a>
                     <div class="banner-info">
@@ -311,18 +316,16 @@ function loadNextShow() {
                     </div>
                 `;
             } else {
-                // En caso de que no haya espectáculos, simplemente vaciamos el contenido y podemos ocultar el elemento
                 content.innerHTML = '';
-                content.style.display = 'none'; // Opcional: oculta el elemento completamente
+                content.style.display = 'none';
             }
         })
         .catch(error => {
             console.error('Error al cargar el próximo espectáculo:', error);
             const content = document.getElementById('next-show-content');
             if (content) {
-                // En caso de error, también vaciamos el contenido y podemos ocultar el elemento
                 content.innerHTML = '';
-                content.style.display = 'none'; // Opcional: oculta el elemento completamente
+                content.style.display = 'none';
             }
         });
 }

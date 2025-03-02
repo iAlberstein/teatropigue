@@ -388,12 +388,16 @@ footer {
 
 /* Show Detail */
 .show-detail-container {
-  display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
-  gap: 20px; /* Espacio entre las columnas/filas */
   padding: 40px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Contenedor interno para los detalles */
+#show-detail-content {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
+  gap: 20px; /* Espacio entre las columnas/filas */
 }
 
 /* Contenedores internos */
@@ -455,7 +459,7 @@ footer {
 
 /* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
 @media (min-width: 769px) {
-  .show-detail-container {
+  #show-detail-content {
     flex-direction: row; /* Muestra en columnas */
     justify-content: space-between; /* Distribuye el espacio entre columnas */
     align-items: flex-start; /* Alinea los elementos al inicio */
@@ -476,7 +480,7 @@ footer {
 
 /* Media Query para pantallas pequeñas (celulares: apilados verticalmente) */
 @media (max-width: 768px) {
-  .show-detail-container {
+  #show-detail-content {
     flex-direction: column; /* Apila los elementos verticalmente */
     align-items: center;
     text-align: center;

@@ -39,14 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("Datos recibidos en POST: " . print_r($_POST, true));
     error_log("Archivos recibidos: " . print_r($_FILES, true));
 
-    $name = trim($_POST['name'] ?? '');
-    $description = trim($_POST['description'] ?? '');
+    // Capturar datos del formulario
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
-    $mes = trim($_POST['mes'] ?? '');
-    $date = trim($_POST['date'] ?? '');
-    $hora = trim($_POST['hora'] ?? '');
-    $link = trim($_POST['link'] ?? '');
-    $id = isset($_POST['edit-id']) ? intval($_POST['edit-id']) : 0; // Cambiamos 'id' por 'edit-id'
+    $mes = isset($_POST['mes']) ? trim($_POST['mes']) : '';
+    $date = isset($_POST['date']) ? trim($_POST['date']) : '';
+    $hora = isset($_POST['hora']) ? trim($_POST['hora']) : '';
+    $link = isset($_POST['link']) ? trim($_POST['link']) : '';
+    $id = isset($_POST['edit-id']) ? intval($_POST['edit-id']) : 0;
+
+    // Validar que los campos requeridos no estén vacíos
+    if (empty($name) || empty($mes) || empty($date) || empty($hora) || empty($link)) {
+        $response['message'] = 'Por favor, complete todos los campos requeridos';
+        echo json_encode($response);
+        exit;
+    }
 
     // Manejo de archivos (imagen y bannerImage)
     $image = '';

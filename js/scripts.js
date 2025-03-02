@@ -488,12 +488,24 @@ function setupAdminForm() {
         const formData = new FormData(form);
         const id = document.getElementById('edit-id').value;
 
+        // Imprimir los datos del formulario para depuración
+        console.log('Datos del formulario:');
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
         try {
             const response = await fetch('api/save_show.php', {
                 method: 'POST',
                 body: formData,
             });
-            const result = await response.json();
+
+            // Obtener la respuesta como texto para depuración
+            const text = await response.text();
+            console.log('Respuesta de save_show.php:', text);
+
+            // Parsear la respuesta como JSON
+            const result = JSON.parse(text);
             if (result.success) {
                 Swal.fire('Éxito', result.message, 'success');
                 form.reset();
@@ -505,7 +517,7 @@ function setupAdminForm() {
             }
         } catch (error) {
             console.error('Error al guardar el espectáculo:', error);
-            Swal.fire('Error', 'Error al guardar el espectáculo', 'error');
+            Swal.fire('Error', 'Error al guardar el espectáculo: ' + error.message, 'error');
         }
     }, { once: true });
 }

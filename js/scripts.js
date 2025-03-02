@@ -466,7 +466,7 @@ function loadShowDetail(id) {
                 </div>
                 <div class="show-info-container">
                     <h2>${show.name || 'Nombre no disponible'}</h2>
-                    <p>${show.description || 'Descripción no disponible'}</p>
+                    <p class="show-description">${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
                     <p><strong>Fecha:</strong> ${show.date ? new Date(show.date).toLocaleDateString('es-ES') : 'Fecha no disponible'}</p>

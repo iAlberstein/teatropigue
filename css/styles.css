@@ -242,6 +242,10 @@ footer {
   background-color: #1b8671;
 }
 
+.show-description {
+  white-space: pre-wrap;
+}
+
 /* Contacto */
 .contacto-container {
   max-width: 600px;

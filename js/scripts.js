@@ -319,7 +319,7 @@ function setupNewsletterForm() {
     }
 }
 
-// Cargar el próximo espectáculo
+
 // Cargar el próximo espectáculo
 function loadNextShow() {
     fetch('api/get_next_show.php')
@@ -338,7 +338,11 @@ function loadNextShow() {
 
                 // Validar imágenes y establecer valores predeterminados
                 const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
-                const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg'; // Cambia esto por una imagen por defecto si quieres
+                const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
+
+                // Parsear la fecha manualmente para evitar problemas de zona horaria
+                const [year, month, day] = show.date.split('-');
+                const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
 
                 content.innerHTML = `
                     <a href="#/show/${show.id_show}">
@@ -350,7 +354,7 @@ function loadNextShow() {
                     </a>
                     <div class="banner-info">
                         <h2>${show.name}</h2>
-                        <p>${new Date(show.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                        <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
                         <a href="#/show/${show.id_show}">
                             <button class="buy-button">Comprar entradas</button>
                         </a>

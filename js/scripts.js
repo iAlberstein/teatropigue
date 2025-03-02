@@ -197,20 +197,16 @@ function contactoView() {
             <h1>CONTACTO</h1>
             <form id="contacto-form" class="contacto-form">
                 <div class="form-group">
-                    <label for="subject">Asunto:</label>
-                    <input type="text" id="subject" name="subject" required>
+                    <input type="text" id="subject" name="subject" placeholder="Asunto" required>
                 </div>
                 <div class="form-group">
-                    <label for="name">Nombre:</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" placeholder="Nombre" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
                 </div>
                 <div class="form-group">
-                    <label for="message">Mensaje:</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <textarea id="message" name="message" placeholder="Escribinos tu mensaje acá" required></textarea>
                 </div>
                 <button type="submit">Enviar</button>
             </form>

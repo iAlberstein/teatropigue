@@ -250,7 +250,7 @@ footer {
   text-align: center;
 }
 
-.contacto-container h2 {
+.contacto-container h1 {
   font-size: 28px;
   margin-bottom: 20px;
 }
@@ -267,11 +267,6 @@ footer {
   text-align: left;
 }
 
-.form-group label {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
 .form-group input,
 .form-group textarea {
   padding: 10px;
@@ -285,6 +280,21 @@ footer {
 .form-group textarea {
   height: 150px;
   resize: vertical;
+}
+
+/* Estilo para los placeholders */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #999;
+  font-size: 16px;
+  font-style: italic; /* Opcional: para darle un toque distintivo */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #0c4f42; /* Usamos el color del botón para el borde al hacer focus */
+  box-shadow: 0 0 5px rgba(12, 79, 66, 0.2); /* Opcional: sombra suave al hacer focus */
 }
 
 .contacto-form button {

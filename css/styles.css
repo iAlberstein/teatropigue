@@ -389,11 +389,11 @@ footer {
 /* Show Detail */
 .show-detail-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
+  flex-wrap: nowrap; /* Evita que las columnas se envuelvan prematuramente */
   gap: 20px; /* Espacio entre las columnas/filas */
   padding: 40px;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 /* Contenedores internos */
@@ -401,14 +401,14 @@ footer {
 .show-info-container,
 .show-extra-container {
   flex: 1; /* Cada contenedor toma el mismo espacio disponible */
-  min-width: 250px; /* Ancho mínimo para evitar que se compriman demasiado */
 }
 
 /* Estilo específico para cada contenedor */
 .show-image-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex: 0 0 auto; /* No crece ni se encoge, usa el ancho de la imagen */
 }
 
 .show-image {
@@ -419,6 +419,7 @@ footer {
 }
 
 .show-info-container {
+  flex: 2; /* Toma más espacio en el centro */
   text-align: center;
 }
 
@@ -428,6 +429,7 @@ footer {
 }
 
 .show-extra-container {
+  flex: 1; /* Menos espacio en la derecha */
   text-align: left;
 }
 
@@ -455,24 +457,19 @@ footer {
   .show-detail-container {
     flex-direction: row; /* Muestra en columnas */
     justify-content: space-between; /* Distribuye el espacio entre columnas */
-    align-items: stretch; /* Asegura que los elementos tengan la misma altura */
+    align-items: flex-start; /* Alinea los elementos al inicio */
   }
 
   .show-image-container {
-    flex: 0 0 auto; /* No crece ni se encoge, usa el ancho de la imagen */
     order: 1; /* Izquierda */
   }
 
   .show-info-container {
-    flex: 2; /* Toma más espacio en el centro */
     order: 2; /* Centro */
-    min-width: 300px; /* Ancho mínimo para el contenido */
   }
 
   .show-extra-container {
-    flex: 1; /* Menos espacio en la derecha */
     order: 3; /* Derecha */
-    min-width: 200px; /* Ancho mínimo para el contenido */
   }
 }
 
@@ -480,6 +477,7 @@ footer {
 @media (max-width: 768px) {
   .show-detail-container {
     flex-direction: column; /* Apila los elementos verticalmente */
+    flex-wrap: wrap; /* Permite envolver si es necesario */
     align-items: center;
     text-align: center;
   }
@@ -489,7 +487,6 @@ footer {
   .show-extra-container {
     flex: none; /* Desactiva el crecimiento automático */
     width: 100%; /* Toma todo el ancho disponible */
-    min-width: 0; /* Restablece el ancho mínimo */
   }
 
   .show-image {

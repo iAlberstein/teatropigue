@@ -481,23 +481,63 @@ function setupContactoForm() {
 // Configurar formulario de admin
 function setupAdminForm() {
     const form = document.getElementById('admin-form');
-    if (!form) return;
+    if (!form) {
+        console.error('Formulario admin-form no encontrado');
+        return;
+    }
 
     form.addEventListener('submit', async e => {
         e.preventDefault();
-        const formData = new FormData(form);
-        const id = document.getElementById('edit-id').value;
 
-        // Imprimir los datos del formulario para depuración
-        console.log('Datos del formulario antes de enviar:');
-        const formDataObj = {};
+        // Capturar valores directamente de los campos para depuración
+        const name = document.getElementById('name').value;
+        const description = document.getElementById('description').value;
+        const price = document.getElementById('price').value;
+        const mes = document.getElementById('mes').value;
+        const date = document.getElementById('date').value;
+        const hora = document.getElementById('hora').value;
+        const link = document.getElementById('link').value;
+        const editId = document.getElementById('edit-id').value;
+
+        console.log('Valores capturados directamente:');
+        console.log('name:', name);
+        console.log('description:', description);
+        console.log('price:', price);
+        console.log('mes:', mes);
+        console.log('date:', date);
+        console.log('hora:', hora);
+        console.log('link:', link);
+        console.log('edit-id:', editId);
+
+        // Construir FormData manualmente
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('mes', mes);
+        formData.append('date', date);
+        formData.append('hora', hora);
+        formData.append('link', link);
+        formData.append('edit-id', editId);
+
+        // Manejar archivos
+        const imageInput = document.getElementById('image');
+        const bannerImageInput = document.getElementById('bannerImage');
+        if (imageInput.files.length > 0) {
+            formData.append('image', imageInput.files[0]);
+        }
+        if (bannerImageInput.files.length > 0) {
+            formData.append('bannerImage', bannerImageInput.files[0]);
+        }
+
+        // Imprimir FormData para depuración
+        console.log('Datos en FormData antes de enviar:');
         for (let [key, value] of formData.entries()) {
-            formDataObj[key] = value;
             console.log(`${key}: ${value}`);
         }
 
         // Validar que los campos requeridos tengan valores
-        if (!formDataObj.name || !formDataObj.mes || !formDataObj.date || !formDataObj.hora || !formDataObj.link) {
+        if (!name || !mes || !date || !hora || !link) {
             Swal.fire('Error', 'Por favor, complete todos los campos requeridos', 'error');
             return;
         }
@@ -522,7 +562,7 @@ function setupAdminForm() {
             console.error('Error al guardar el espectáculo:', error);
             Swal.fire('Error', 'Error al guardar el espectáculo: ' + error.message, 'error');
         }
-    }, { once: true });
+    });
 }
 
 // Cargar espectáculos en el admin

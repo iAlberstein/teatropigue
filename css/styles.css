@@ -500,6 +500,16 @@ footer {
   background-color: #1b8671;
 }
 
+.sponsor-img {
+  max-width: 200px;
+}
+.sponsor-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: inline-block; /* Ajusta el contenedor al tamaño del contenido */
+  padding: 0; /* Elimina el padding para que el contenedor sea del tamaño exacto de la imagen */
+}
+
 /* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
 @media (min-width: 769px) {
   #show-detail-content {
@@ -675,6 +685,9 @@ footer .social-icons a:hover {
 .boton:hover {
   background-color: #1b8671;
 }
+.sponsor-img {
+  max-width: 150px;
+}
 
 /* Media Queries para Responsividad */
 @media (max-width: 992px) {
@@ -827,4 +840,5 @@ footer .social-icons a:hover {
   button {
     padding: 12px 20px; /* Mejorar usabilidad en móviles */
   }
+  
 }

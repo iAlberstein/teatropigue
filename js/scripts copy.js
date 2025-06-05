@@ -28,7 +28,7 @@ function parseRoute() {
     return { handler: routes['/'], params: [] };
 }
 
-// En renderView, agregamos un pequeño retraso para evitar problemas en móviles
+// En // En renderView, agregamos un pequeño retraso para evitar problemas en móviles
 function renderView() {
     try {
         console.log('Rendering view...');
@@ -46,7 +46,7 @@ function renderView() {
             if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
                 console.log('Loading home view specific logic...');
                 setupNewsletterForm();
-                loadActiveShows();
+                loadNextShow();
             } else if (window.location.hash.startsWith('#/cartelera')) {
                 loadCartelera();
             } else if (window.location.hash.startsWith('#/show/')) {
@@ -120,10 +120,9 @@ function setupNavbarCollapse() {
 function homeView() {
     return `
         <div class="container mt-4">
-            <div id="carousel-container" class="banner">
-                <button id="prev-button">←</button>
-                <div id="carousel-content"></div>
-                <button id="next-button">→</button>
+            <div id="next-show-banner" class="banner">
+                
+                <div id="next-show-content"></div>
             </div>
             <div class="newsletter">
                 <h4>¡Suscribite a nuestro newsletter!</h4>
@@ -166,7 +165,7 @@ function historiaView() {
                     <p>La Sociedad Española de Socorros Mutuos de Pigüé fue fundada el 14 de junio de 1894, apenas diez años después de la creación de la ciudad. Treinta años más tarde, se emprendió una gran iniciativa: la construcción de un teatro, convirtiéndose en la única sala concebida y edificada desde el inicio de la ciudad con ese propósito, <strong>inaugurado el 26 de abril de 1926.</strong></p>
                     <p><strong>Declarado monumento histórico provincial</strong> mediante la Ley 11535 en mayo de 1994, el edificio del Teatro Español fue diseñado por el ingeniero Marseillán, oriundo de Bahía Blanca, y construido por la empresa de Don Domingo Oresti. Este destacado empresario, reconocido por su labor en numerosas obras particulares e institucionales en Pigüé y la región, dejó un legado que aún es visible en la actualidad.</p>
                     <p>El teatro, con su clásico formato en herradura, cuenta con palcos altos y bajos, palcos laterales y platea, albergando hasta <strong>446 espectadores.</strong> Su extraordinaria acústica lo ha consolidado como un espacio de referencia para la cultura y las artes escénicas.</p>
-                    <p>Entre 2021 y 2024, la Sociedad Española estableció un convenio de uso con la Municipalidad de Saavedra-Pigüé, retomando una frosting impulsada por Jorge Capotosti, quien no pudo concretarla en vida durante su gestión como concejal y secretario de cultura municipal. No obstante, a partir de 2025, la Sociedad Española decidió retomar la administración plena del teatro, con el propósito de focalizarse en la <strong>conmemoración del centenario de la construcción del edificio.</strong> En este nuevo ciclo, la gestión del espacio se encuentra a cargo de Anita Lopez Holzmann y Bruno Alberstein.</p>
+                    <p>Entre 2021 y 2024, la Sociedad Española estableció un convenio de uso con la Municipalidad de Saavedra-Pigüé, retomando una idea impulsada por Jorge Capotosti, quien no pudo concretarla en vida durante su gestión como concejal y secretario de cultura municipal. No obstante, a partir de 2025, la Sociedad Española decidió retomar la administración plena del teatro, con el propósito de focalizarse en la <strong>conmemoración del centenario de la construcción del edificio.</strong> En este nuevo ciclo, la gestión del espacio se encuentra a cargo de Anita Lopez Holzmann y Bruno Alberstein.</p>
                     <p>De esta forma, se proyecta la puesta en valor del edificio y se garantiza el acceso transversal para toda la comunidad artística, reafirmando su papel fundamental en la vida cultural de Pigüé y la región.</p>
                 </div>
                 <div class="col-md-6 historia-image-container">
@@ -176,7 +175,7 @@ function historiaView() {
 
             <!-- Sección Ubicación -->
             <div class="row historia-section ubicacion-section">
-                <div class="col-md-6 historia-image-container order-md-1 order-2 живица2">
+                <div class="col-md-6 historia-image-container order-md-1 order-2">
                     <img src="images/mapaPBA.png" alt="Mapa de la Provincia de Buenos Aires" class="historia-image">
                 </div>
                 <div class="col-md-6 historia-text order-md-2 order-1">
@@ -319,15 +318,10 @@ function setupNewsletterForm() {
     }
 }
 
-// Variables globales para el carrusel
-let shows = [];
-let currentIndex = 0;
-let intervalId = null;
-const AUTO_SLIDE_INTERVAL = 2000;
 
-// Cargar los shows activos para el carrusel
-function loadActiveShows() {
-    fetch('api/get_active_shows.php')
+// Cargar el próximo espectáculo
+function loadNextShow() {
+    fetch('api/get_next_show.php')
         .then(res => {
             if (!res.ok) {
                 throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
@@ -335,91 +329,49 @@ function loadActiveShows() {
             return res.json();
         })
         .then(response => {
-            const content = document.getElementById('carousel-content');
+            const content = document.getElementById('next-show-content');
             if (!content) return;
 
-            if (response.success && response.data && response.data.length > 0) {
-                shows = response.data;
-                displayShow(currentIndex);
-                startAutoSlide();
+            if (response.success && response.data) {
+                const show = response.data;
+
+                // Validar imágenes y establecer valores predeterminados
+                const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
+                const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
+
+                // Parsear la fecha manualmente para evitar problemas de zona horaria
+                const [year, month, day] = show.date.split('-');
+                const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+
+                content.innerHTML = `
+                    <a href="#/show/${show.id_show}">
+                        <h2>PRÓXIMAMENTE</h2>
+                        <picture>
+                            <source media="(min-width: 750px)" srcset="${bannerImage}">
+                            <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
+                        </picture>
+                    </a>
+                    <div class="banner-info">
+                        <h2>${show.name}</h2>
+                        <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                        <a href="#/show/${show.id_show}">
+                            <button class="buy-button">Comprar entradas</button>
+                        </a>
+                    </div>
+                `;
             } else {
-                content.innerHTML = '<p>No hay shows activos disponibles.</p>';
-                content.style.display = 'block';
+                content.innerHTML = '';
+                content.style.display = 'none';
             }
         })
         .catch(error => {
-            console.error('Error al cargar los shows activos:', error);
-            const content = document.getElementById('carousel-content');
+            console.error('Error al cargar el próximo espectáculo:', error);
+            const content = document.getElementById('next-show-content');
             if (content) {
-                content.innerHTML = '<p>Error al cargar los shows.</p>';
-                content.style.display = 'block';
+                content.innerHTML = '';
+                content.style.display = 'none';
             }
         });
-}
-
-// Mostrar un show específico
-function displayShow(index) {
-    const content = document.getElementById('carousel-content');
-    if (!content || !shows[index]) return;
-
-    const show = shows[index];
-    const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
-    const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
-
-    const [year, month, day] = show.date.split('-');
-    const parsedDate = new Date(year, month - 1, day);
-
-    content.innerHTML = `
-        <a href="#/show/${show.id_show}">
-            <h2>PRÓXIMAMENTE</h2>
-            <picture>
-                <source media="(min-width: 750px)" srcset="${bannerImage}">
-                <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
-            </picture>
-        </a>
-        <div class="banner-info">
-            <h2>${show.name}</h2>
-            <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-            <a href="#/show/${show.id_show}">
-                <button class="buy-button">Comprar entradas</button>
-            </a>
-        </div>
-    `;
-}
-
-// Iniciar el cambio automático
-function startAutoSlide() {
-    stopAutoSlide();
-    if (shows.length > 1) {
-        intervalId = setInterval(() => {
-            currentIndex = (currentIndex + 1) % shows.length;
-            displayShow(currentIndex);
-        }, AUTO_SLIDE_INTERVAL);
-    }
-}
-
-// Detener el cambio automático
-function stopAutoSlide() {
-    if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
-    }
-}
-
-// Avanzar al siguiente show
-function nextShow() {
-    stopAutoSlide();
-    currentIndex = (currentIndex + 1) % shows.length;
-    displayShow(currentIndex);
-    startAutoSlide();
-}
-
-// Retroceder al show anterior
-function prevShow() {
-    stopAutoSlide();
-    currentIndex = (currentIndex - 1 + shows.length) % shows.length;
-    displayShow(currentIndex);
-    startAutoSlide();
 }
 
 // Cargar cartelera
@@ -432,11 +384,12 @@ function loadCartelera() {
             return res.json();
         })
         .then(response => {
+            // Asegurarnos de que response.data exista y sea un array
             if (!response.success || !Array.isArray(response.data)) {
                 throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
             }
 
-            const shows = response.data;
+            const shows = response.data; // Extraemos el array de data
             const container = document.getElementById('shows-container');
             const monthSelect = document.getElementById('month-select');
             const searchInput = document.getElementById('search-input');
@@ -457,10 +410,11 @@ function loadCartelera() {
                 });
 
                 container.innerHTML = filteredShows.map(show => {
+                    // Parsear la fecha manualmente para evitar problemas de zona horaria
                     let formattedDate = 'Fecha no disponible';
                     if (show.date) {
                         const [year, month, day] = show.date.split('-');
-                        const parsedDate = new Date(year, month - 1, day);
+                        const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
                         formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
                     }
 
@@ -507,19 +461,23 @@ function loadShowDetail(id) {
             return res.json();
         })
         .then(response => {
-            console.log('Respuesta de get_show.php:', response);
+            console.log('Respuesta de get_show.php:', response); // Depuración
 
+            // Verificar si la respuesta tiene éxito y contiene datos
             if (!response.success || !response.data) {
                 throw new Error(response.message || 'No se encontraron datos del espectáculo');
             }
 
-            const show = response.data;
+            const show = response.data; // Extraemos los datos del espectáculo
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
+  
+            // Parsear la fecha manualmente para evitar problemas de zona horaria
             const [year, month, day] = show.date.split('-');
-            const parsedDate = new Date(year, month - 1, day);
+            const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
 
+            // Mostrar los datos en la interfaz
             content.innerHTML = `
                 <div class="show-image-container">
                     ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name || 'Espectáculo'}" class="show-image">` : ''}
@@ -529,7 +487,7 @@ function loadShowDetail(id) {
                     <p class="show-description">${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
-                    <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                     <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
                     <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>
@@ -603,6 +561,7 @@ function setupAdminForm() {
     form.addEventListener('submit', async e => {
         e.preventDefault();
 
+        // Capturar valores directamente de los campos para depuración
         const name = document.getElementById('name').value;
         const description = document.getElementById('description').value;
         const price = document.getElementById('price').value;
@@ -622,6 +581,7 @@ function setupAdminForm() {
         console.log('link:', link);
         console.log('edit-id:', editId);
 
+        // Construir FormData manualmente
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
@@ -632,6 +592,7 @@ function setupAdminForm() {
         formData.append('link', link);
         formData.append('edit-id', editId);
 
+        // Manejar archivos
         const imageInput = document.getElementById('image');
         const bannerImageInput = document.getElementById('bannerImage');
         if (imageInput.files.length > 0) {
@@ -641,11 +602,13 @@ function setupAdminForm() {
             formData.append('bannerImage', bannerImageInput.files[0]);
         }
 
+        // Imprimir FormData para depuración
         console.log('Datos en FormData antes de enviar:');
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
 
+        // Validar que los campos requeridos tengan valores
         if (!name || !mes || !date || !hora || !link) {
             Swal.fire('Error', 'Por favor, complete todos los campos requeridos', 'error');
             return;
@@ -684,11 +647,12 @@ function loadAdminShows() {
             return res.json();
         })
         .then(response => {
+            // Asegurarnos de que response.data exista y sea un array
             if (!response.success || !Array.isArray(response.data)) {
                 throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
             }
 
-            const shows = response.data;
+            const shows = response.data; // Extraemos el array de data
             const container = document.getElementById('admin-shows-container');
             const searchInput = document.getElementById('admin-search');
             const monthSelect = document.getElementById('admin-month-select');
@@ -800,11 +764,3 @@ function deleteShow(id) {
         }
     });
 }
-
-// Inicializar el carrusel al cargar la vista de inicio
-document.addEventListener('DOMContentLoaded', () => {
-    const nextButton = document.getElementById('next-button');
-    const prevButton = document.getElementById('prev-button');
-    if (nextButton) nextButton.addEventListener('click', nextShow);
-    if (prevButton) prevButton.addEventListener('click', prevShow);
-});

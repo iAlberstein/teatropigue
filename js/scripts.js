@@ -438,9 +438,10 @@ function loadNextShow() {
                             <div class="carousel-caption d-none d-md-block">
                                 <h2>PRÓXIMAMENTE</h2>
                                 <h3>${show.name}</h3>
-                                <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                                
+                                
                                 <a href="#/show/${show.id_show}">
-                                    <button class="buy-button">Comprar entradas</button>
+                                    <button class="buy-button">Más Información</button>
                                 </a>
                             </div>
                         </div>

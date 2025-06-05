@@ -170,6 +170,9 @@ footer {
 }
 
 .carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
   text-align: left;
   left: 0;
   bottom: 0;

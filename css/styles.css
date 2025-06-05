@@ -116,7 +116,7 @@ footer {
 }
 
 /* Banner */
-.banner {
+/* .banner {
   position: relative;
   width: 100%;
   margin: 20px auto;
@@ -146,6 +146,66 @@ footer {
 
 .banner-info p {
   margin: 5px 0;
+} */
+
+.banner {
+  margin-bottom: 2rem;
+}
+
+#showsCarousel {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.carousel-item {
+  position: relative;
+  text-align: center;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.carousel-caption h2 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-caption h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-caption p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.buy-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+  background-color: #0056b3;
 }
 
 /* Cartelera */
@@ -653,6 +713,34 @@ footer {
 
   .historia-section {
       flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-caption {
+      display: block !important;
+      padding: 0.5rem;
+  }
+
+  .carousel-caption h2 {
+      font-size: 1.2rem;
+  }
+
+  .carousel-caption h3 {
+      font-size: 1rem;
+  }
+
+  .carousel-caption p {
+      font-size: 0.9rem;
+  }
+
+  .buy-button {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+  }
+
+  .banner-image {
+      max-height: 300px;
   }
 }
 

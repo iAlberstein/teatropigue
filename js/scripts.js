@@ -117,12 +117,43 @@ function setupNavbarCollapse() {
 }
 
 // Vistas
+// function homeView() {
+//     return `
+//         <div class="container mt-4">
+//             <div id="next-show-banner" class="banner">
+                
+//                 <div id="next-show-content"></div>
+//             </div>
+//             <div class="newsletter">
+//                 <h4>¡Suscribite a nuestro newsletter!</h4>
+//                 <p>Recibí todas las novedades del Teatro Español Pigüé en tu mail.</p>
+//                 <form id="newsletter-form">
+//                     <input type="text" name="name" id="name" required placeholder="Nombre y apellido" class="campo">
+//                     <input type="email" name="email" id="email" required placeholder="Dirección de mail" class="campo">
+//                     <input type="submit" value="Suscribirme" class="boton">
+//                 </form>
+//             </div>
+//         </div>
+//     `;
+// }
+
 function homeView() {
     return `
         <div class="container mt-4">
             <div id="next-show-banner" class="banner">
-                
-                <div id="next-show-content"></div>
+                <div id="showsCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="next-show-content">
+                        <!-- Elementos del carrusel se cargan dinámicamente -->
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#showsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#showsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
             </div>
             <div class="newsletter">
                 <h4>¡Suscribite a nuestro newsletter!</h4>
@@ -320,8 +351,62 @@ function setupNewsletterForm() {
 
 
 // Cargar el próximo espectáculo
+// function loadNextShow() {
+//     fetch('api/get_next_show.php')
+//         .then(res => {
+//             if (!res.ok) {
+//                 throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+//             }
+//             return res.json();
+//         })
+//         .then(response => {
+//             const content = document.getElementById('next-show-content');
+//             if (!content) return;
+
+//             if (response.success && response.data) {
+//                 const show = response.data;
+
+//                 // Validar imágenes y establecer valores predeterminados
+//                 const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
+//                 const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
+
+//                 // Parsear la fecha manualmente para evitar problemas de zona horaria
+//                 const [year, month, day] = show.date.split('-');
+//                 const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+
+//                 content.innerHTML = `
+//                     <a href="#/show/${show.id_show}">
+//                         <h2>PRÓXIMAMENTE</h2>
+//                         <picture>
+//                             <source media="(min-width: 750px)" srcset="${bannerImage}">
+//                             <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
+//                         </picture>
+//                     </a>
+//                     <div class="banner-info">
+//                         <h2>${show.name}</h2>
+//                         <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+//                         <a href="#/show/${show.id_show}">
+//                             <button class="buy-button">Comprar entradas</button>
+//                         </a>
+//                     </div>
+//                 `;
+//             } else {
+//                 content.innerHTML = '';
+//                 content.style.display = 'none';
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error al cargar el próximo espectáculo:', error);
+//             const content = document.getElementById('next-show-content');
+//             if (content) {
+//                 content.innerHTML = '';
+//                 content.style.display = 'none';
+//             }
+//         });
+// }
+
 function loadNextShow() {
-    fetch('api/get_next_show.php')
+    fetch('api/get_upcoming_shows.php')
         .then(res => {
             if (!res.ok) {
                 throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
@@ -332,44 +417,46 @@ function loadNextShow() {
             const content = document.getElementById('next-show-content');
             if (!content) return;
 
-            if (response.success && response.data) {
-                const show = response.data;
+            if (response.success && response.data && Array.isArray(response.data) && response.data.length > 0) {
+                const shows = response.data;
 
-                // Validar imágenes y establecer valores predeterminados
-                const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
-                const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
+                content.innerHTML = shows.map((show, index) => {
+                    const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
+                    const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
 
-                // Parsear la fecha manualmente para evitar problemas de zona horaria
-                const [year, month, day] = show.date.split('-');
-                const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+                    const [year, month, day] = show.date.split('-');
+                    const parsedDate = new Date(year, month - 1, day);
 
-                content.innerHTML = `
-                    <a href="#/show/${show.id_show}">
-                        <h2>PRÓXIMAMENTE</h2>
-                        <picture>
-                            <source media="(min-width: 750px)" srcset="${bannerImage}">
-                            <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
-                        </picture>
-                    </a>
-                    <div class="banner-info">
-                        <h2>${show.name}</h2>
-                        <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-                        <a href="#/show/${show.id_show}">
-                            <button class="buy-button">Comprar entradas</button>
-                        </a>
-                    </div>
-                `;
+                    return `
+                        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                            <a href="#/show/${show.id_show}">
+                                <picture>
+                                    <source media="(min-width: 750px)" srcset="${bannerImage}">
+                                    <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
+                                </picture>
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2>PRÓXIMAMENTE</h2>
+                                <h3>${show.name}</h3>
+                                <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
+                                <a href="#/show/${show.id_show}">
+                                    <button class="buy-button">Comprar entradas</button>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             } else {
                 content.innerHTML = '';
-                content.style.display = 'none';
+                content.parentElement.style.display = 'none';
             }
         })
         .catch(error => {
-            console.error('Error al cargar el próximo espectáculo:', error);
+            console.error('Error al cargar los espectáculos futuros:', error);
             const content = document.getElementById('next-show-content');
             if (content) {
                 content.innerHTML = '';
-                content.style.display = 'none';
+                content.parentElement.style.display = 'none';
             }
         });
 }

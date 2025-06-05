@@ -435,13 +435,6 @@ function loadNextShow() {
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
                                 </picture>
                             </a>
-                            <div class="carousel-caption d-none d-md-block">
-                                
-                                
-                                <a href="#/show/${show.id_show}">
-                                    <button class="buy-button-next-show">Más Información</button>
-                                </a>
-                            </div>
                         </div>
                     `;
                 }).join('');

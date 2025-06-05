@@ -436,12 +436,10 @@ function loadNextShow() {
                                 </picture>
                             </a>
                             <div class="carousel-caption d-none d-md-block">
-                                <h2>PRÓXIMAMENTE</h2>
-                                <h3>${show.name}</h3>
                                 
                                 
                                 <a href="#/show/${show.id_show}">
-                                    <button class="buy-button">Más Información</button>
+                                    <button class="buy-button-next-show">Más Información</button>
                                 </a>
                             </div>
                         </div>

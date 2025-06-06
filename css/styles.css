@@ -704,6 +704,10 @@ footer {
   padding: 20px;
 }
 
+.custom-spacer {
+  margin-top: 30px;
+}
+
 .palier-container h1 {
   font-size: 2.5rem;
   font-weight: bold;

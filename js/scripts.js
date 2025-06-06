@@ -435,8 +435,8 @@ function loadNextShow() {
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
                                 </picture>
                             </a>
-                            <div class="carousel-caption d-flex justify-content-center">
-                                <a href="#/show/${show.id_show}" class="btn btn-primary btn-sm">Más info</a>
+                            <div class="carousel-caption" style="text-align: left; left: 20px; bottom: 20px; background: none; padding: 0;">
+                                <a href="#/show/${show.id_show}" class="btn btn-more-info">Más info</a>
                             </div>
                         </div>
                     `;

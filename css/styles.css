@@ -64,12 +64,10 @@ textarea {
 /* Estilos para el menú colapsado en pantallas pequeñas */
 @media (max-width: 991.98px) {
   .navbar-nav {
-
       padding: 10px 0;
   }
 
   .navbar-nav .nav-item {
-
   }
 
   .navbar-nav .nav-item:last-child {
@@ -116,38 +114,6 @@ footer {
 }
 
 /* Banner */
-/* .banner {
-  position: relative;
-  width: 100%;
-  margin: 20px auto;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.banner-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.banner-info {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.banner-info h2 {
-  margin: 0;
-}
-
-.banner-info p {
-  margin: 5px 0;
-} */
-
 .banner {
   margin-bottom: 2rem;
 }
@@ -176,6 +142,21 @@ footer {
   text-align: left;
   left: 0;
   bottom: 0;
+}
+
+.btn-more-info {
+  background-color: #0c4f42;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-more-info:hover {
+  background-color: #1b8671;
 }
 
 .buy-button-next-show {
@@ -218,8 +199,6 @@ footer {
 }
 
 /* Cartelera */
-
-
 .cartelera-container {
   width: 100%;
   padding: 20px;
@@ -748,6 +727,11 @@ footer {
       padding: 0.4rem 0.8rem;
   }
 
+  .btn-more-info {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+  }
+
   .banner-image {
       max-height: 300px;
   }
@@ -955,5 +939,4 @@ footer .social-icons a:hover {
   button {
     padding: 12px 20px; /* Mejorar usabilidad en móviles */
   }
-  
 }

@@ -438,6 +438,15 @@ function loadNextShow() {
                         </div>
                     `;
                 }).join('');
+
+                // Initialize carousel with 2-second interval
+                const carousel = document.getElementById('showsCarousel');
+                if (carousel) {
+                    new bootstrap.Carousel(carousel, {
+                        interval: 2000, // Change slide every 2 seconds
+                        wrap: true
+                    });
+                }
             } else {
                 content.innerHTML = '';
                 content.parentElement.style.display = 'none';

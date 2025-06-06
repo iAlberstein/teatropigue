@@ -443,7 +443,7 @@ function loadNextShow() {
                 const carousel = document.getElementById('showsCarousel');
                 if (carousel) {
                     new bootstrap.Carousel(carousel, {
-                        interval: 2000, // Change slide every 2 seconds
+                        interval: 3000, // Change slide every 2 seconds
                         wrap: true
                     });
                 }

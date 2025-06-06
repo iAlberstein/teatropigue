@@ -439,6 +439,17 @@ function loadNextShow() {
                     `;
                 }).join('');
 
+                // Add "Ver cartelera completa" button below the carousel
+                const carouselContainer = document.getElementById('showsCarousel');
+                if (carouselContainer) {
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.className = 'full-cartelera-container';
+                    buttonContainer.innerHTML = `
+                        <a href="https://www.teatropigue.com.ar/#/cartelera" class="btn btn-full-cartelera">Ver cartelera completa</a>
+                    `;
+                    carouselContainer.insertAdjacentElement('afterend', buttonContainer);
+                }
+
                 // Initialize carousel only if not already initialized
                 const carouselElement = document.getElementById('showsCarousel');
                 if (carouselElement && !carouselElement._carousel) {

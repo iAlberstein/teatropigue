@@ -179,7 +179,7 @@ function palierView() {
                             Las alas, extendiéndose con fuerza y gracia, simbolizan la resiliencia del espíritu, la capacidad de elevarse una y otra vez. Mi intención es que esta escultura inspire a contemplar la belleza que emerge de la adversidad y la eterna esperanza que reside en el ciclo de la vida.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/ave_fenix.gif" alt="Ave Fénix" class="palier-gif">
+                            <video src="/images/palier/ave_fenix.mp4" alt="Ave Fénix" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Ave Fenix</h3>
@@ -199,7 +199,7 @@ function palierView() {
                             utilizando la riqueza textural de la chatarra. Cada engranaje y fragmento metálico se entrelaza para dar vida a la silueta de este tranquilo habitante de nuestras tierras. La calidez de los tonos cobrizos contrasta con los detalles más oscuros, creando una sensación de volumen y profundidad a través de las perforaciones y las superposiciones. Mi intención al trabajar con estos materiales reciclados es no solo darles una segunda oportunidad, sino también evocar la conexión entre la naturaleza y la huella humana, transformando lo industrial en una representación orgánica y entrañable.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/capibara.gif" alt="Capibara" class="palier-gif">
+                            <video src="/images/palier/capibara.mp4" alt="Capibara" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Capibara</h3>
@@ -210,7 +210,6 @@ function palierView() {
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
@@ -219,7 +218,7 @@ function palierView() {
                             <p>En esta pieza, he buscado capturar la majestuosidad y la mirada penetrante del búho, un símbolo de sabiduría y misterio, a través del ensamblaje de elementos metálicos reciclados. Cada fragmento de chatarra se une para evocar la textura y la forma imponente de su figura. Las perforaciones permiten que la luz interactúe con la escultura, creando sombras que acentúan su volumen y profundidad. Mi intención al trabajar con estos materiales es darles una nueva vida, transformando lo que fue desechado en una representación artística que celebra la belleza y la singularidad de la naturaleza.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/buho.gif" alt="Buho" class="palier-gif">
+                            <video src="/images/palier/buho.mp4" alt="Buho" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Buho</h3>
@@ -229,47 +228,44 @@ function palierView() {
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
                         <div class="palier-desc desktop-only">
                             <h3>El Gato</h3>
                             <p>En esta escultura, he buscado capturar la elegancia y la curiosidad innata de un gato a través del ensamblaje de metales reciclados con un acabado que juega con la luz y la sombra.
-                            Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos."</p>
+                            Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/el_gato.gif" alt="El Gato" class="palier-gif">
+                            <video src="/images/palier/el_gato.mp4" alt="El Gato" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>El Gato</h3>
                                 <p>En esta escultura, he buscado capturar la elegancia y la curiosidad innata de un gato a través del ensamblaje de metales reciclados con un acabado que juega con la luz y la sombra.
-                                Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos."</p>
+                                Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos.</p>
                                 <button class="btn btn-close-desc">Cerrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
                         <div class="palier-desc desktop-only">
                             <h3>Halcón Rapaz</h3>
-                            <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
+                            <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón. Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/halcon_rapaz.gif" alt="Halcón Rapaz" class="palier-gif">
+                            <video src="/images/palier/halcon_rapaz.mp4" alt="Halcón Rapaz" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Halcón Rapaz</h3>
-                                <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
+                                <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón. Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
                                 <button class="btn btn-close-desc">Cerrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
@@ -278,7 +274,7 @@ function palierView() {
                             <p>En esta escultura, he buscado capturar la ligereza y la gracia del vuelo de una golondrina. Cada pieza de metal se ensambla para evocar la forma aerodinámica y la fluidez de sus alas en pleno movimiento. He jugado con los espacios vacíos y las texturas para transmitir la sensación de ligereza y la agilidad característica de estas aves. Mi intención es celebrar la belleza de la naturaleza en movimiento, transformando la rigidez del metal en una imagen dinámica y evocadora de la libertad del cielo.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/golondrina.gif" alt="Golondrina" class="palier-gif">
+                            <video src="/images/palier/golondrina.mp4" alt="Golondrina" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Golondrina</h3>
@@ -288,7 +284,6 @@ function palierView() {
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
@@ -297,7 +292,7 @@ function palierView() {
                             <p>En esta pieza, he querido capturar un instante lúdico y lleno de curiosidad felina. La agilidad del gato, casi danzando sobre sus patas traseras, contrasta con la solidez de los materiales de desecho que le dan forma. Cada engranaje y pieza metálica perforada se convierte en parte de una textura vibrante, permitiendo que la luz juegue a través de la estructura y defina su movimiento. La delicada conexión con la mariposa, suspendida en el aire, añade un toque de fantasía y evoca la naturaleza cazadora y juguetona del felino. Mi intención es trascender la naturaleza industrial de la chatarra para crear una escena que transmita alegría y una conexión sutil con el mundo natural.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/golden_cat.gif" alt="Golden Cat" class="palier-gif">
+                            <video src="/images/palier/golden_cat.mp4" alt="Golden Cat" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Golden Cat</h3>
@@ -307,7 +302,6 @@ function palierView() {
                         </div>
                     </div>
                 </div>
-
                 <!-- Repite el bloque para más esculturas -->
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
@@ -316,7 +310,7 @@ function palierView() {
                             <p>En esta escultura, he tratado de plasmar la velocidad y la precisión implacable de un halcón peregrino en pleno picada. Cada fragmento de metal se ensambla para evocar la forma aerodinámica y la tensión muscular de esta ave rapaz en su descenso vertiginoso. He buscado capturar ese instante de potencia concentrada, donde la fuerza y la elegancia se fusionan en una imagen impactante. Mi intención es transmitir la sensación de la naturaleza en su estado más puro y dinámico, utilizando la rigidez del metal para sugerir la increíble velocidad y agilidad de este depredador aéreo.</p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/halcon.gif" alt="Halcón" class="palier-gif">
+                            <video src="/images/palier/halcon.mp4" alt="Halcón" class="palier-gif" autoplay loop muted playsinline></video>
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Halcón</h3>
@@ -326,8 +320,6 @@ function palierView() {
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     `;

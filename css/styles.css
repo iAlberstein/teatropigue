@@ -148,6 +148,26 @@ footer {
   background-color: #1b8671;
 }
 
+.full-cartelera-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-full-cartelera {
+  background-color: #0c4f42;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-full-cartelera:hover {
+  background-color: #1b8671;
+}
+
 .buy-button-next-show {
   position: absolute;
   bottom: 20px;
@@ -567,93 +587,6 @@ footer {
 
 /* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
 @media (min-width: 769px) {
-  #show-detail-content in-width: 250px; /* Ancho mínimo para evitar que se compriman demasiado */
-}
-
-/* Estilo específico para cada contenedor */
-.show-image-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex: 0 0 auto; /* No crece ni se encoge, usa el ancho de la imagen */
-}
-
-.show-image {
-  width: 300px; /* Ancho fijo de 300px */
-  height: auto; /* Mantiene la proporción */
-  display: block;
-  border-radius: 10px;
-}
-
-.show-info-container {
-  flex: 2; /* Toma más espacio en el centro */
-  text-align: center;
-}
-
-.show-info-container h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.show-extra-container {
-  flex: 1; /* Menos espacio en la derecha */
-  text-align: left;
-  background-color: white; /* Fondo blanco */
-  border: 1px solid #ccc; /* Contorno gris claro */
-  padding: 20px; /* Espacio interno para que el contorno no esté pegado al contenido */
-  border-radius: 5px; /* Bordes redondeados (opcional) */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave (opcional) */
-}
-
-.show-extra-container p {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.buy-button {
-  background-color: #0a6d48;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.buy-button:hover {
-  background-color: #1b8671;
-}
-
-.sponsor-card {
-  width: 200px; /* Fixed width for consistency */
-  height: 150px; /* Fixed height for consistency */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ddd; /* Optional: adds a subtle border */
-  border-radius: 8px; /* Optional: rounded corners */
-  overflow: hidden; /* Ensures image fits within card */
-  background-color: #fff; /* White background for uniformity */
-  transition: transform 0.3s ease; /* Smooth hover effect */
-}
-
-.sponsor-card:hover {
-  transform: scale(1.05); /* Slight zoom on hover */
-}
-
-.sponsor-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Ensures image scales properly without distortion */
-}
-
-.col-md-3 {
-  padding-right: 2.5px; /* Half of 5px gap */
-  padding-left: 2.5px; /* Half of 5px gap */
-}
-
-/* Media Query para pantallas grandes (3 columnas: izquierda, centro, derecha) */
-@media (min-width: 769px) {
   #show-detail-content {
     flex-direction: row; /* Muestra en columnas */
     justify-content: space-between; /* Distribuye el espacio entre columnas */
@@ -804,6 +737,11 @@ footer {
   }
 
   .btn-more-info {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+  }
+
+  .btn-full-cartelera {
       font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
   }

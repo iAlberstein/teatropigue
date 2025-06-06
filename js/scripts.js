@@ -2,6 +2,7 @@
 const routes = {
     '/': homeView,
     '/cartelera': carteleraView,
+    '/palier': palierView,
     '/historia': historiaView,
     '/contacto': contactoView,
     '/admin33860988': adminView,
@@ -28,7 +29,6 @@ function parseRoute() {
     return { handler: routes['/'], params: [] };
 }
 
-// En // En renderView, agregamos un pequeño retraso para evitar problemas en móviles
 function renderView() {
     try {
         console.log('Rendering view...');
@@ -38,7 +38,6 @@ function renderView() {
             console.error('Element with id "app" not found');
             return;
         }
-        // Agregamos un pequeño retraso para mejorar el rendimiento en móviles
         setTimeout(() => {
             app.innerHTML = handler(...params);
 
@@ -57,6 +56,8 @@ function renderView() {
             } else if (window.location.hash === '#/admin33860988') {
                 setupAdminForm();
                 loadAdminShows();
+            } else if (window.location.hash === '#/palier') {
+                setupPalierDescriptions();
             }
 
             // Configurar los eventos del navbar después de renderizar
@@ -78,7 +79,6 @@ function renderView() {
     }
 }
 
-// Aseguramos que los eventos no se acumulen en móviles
 window.addEventListener('popstate', () => {
     console.log('Popstate event triggered');
     renderView();
@@ -95,13 +95,11 @@ function handleLinkClick(e) {
     navigateTo(path);
 }
 
-// Función para cerrar el menú colapsado al hacer clic en un enlace
 function setupNavbarCollapse() {
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     const navbarCollapse = document.querySelector('#navbarNav');
 
     navLinks.forEach(link => {
-        // Limpiamos eventos previos para evitar duplicados
         link.removeEventListener('click', closeNavbarOnClick);
         link.addEventListener('click', closeNavbarOnClick);
     });
@@ -117,31 +115,11 @@ function setupNavbarCollapse() {
 }
 
 // Vistas
-// function homeView() {
-//     return `
-//         <div class="container mt-4">
-//             <div id="next-show-banner" class="banner">
-                
-//                 <div id="next-show-content"></div>
-//             </div>
-//             <div class="newsletter">
-//                 <h4>¡Suscribite a nuestro newsletter!</h4>
-//                 <p>Recibí todas las novedades del Teatro Español Pigüé en tu mail.</p>
-//                 <form id="newsletter-form">
-//                     <input type="text" name="name" id="name" required placeholder="Nombre y apellido" class="campo">
-//                     <input type="email" name="email" id="email" required placeholder="Dirección de mail" class="campo">
-//                     <input type="submit" value="Suscribirme" class="boton">
-//                 </form>
-//             </div>
-//         </div>
-//     `;
-// }
-
 function homeView() {
     return `
         <div class="container mt-4">
             <div id="next-show-banner" class="banner">
-                <div id="showsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div id="showsCarousel" class="carousel slide">
                     <div class="carousel-inner" id="next-show-content">
                         <!-- Elementos del carrusel se cargan dinámicamente -->
                     </div>
@@ -180,6 +158,176 @@ function carteleraView() {
             </div>
             <div id="shows-container" class="shows-container">
                 <!-- Espectáculos se cargan dinámicamente -->
+            </div>
+        </div>
+    `;
+}
+
+function palierView() {
+    return `
+        <div class="container mt-4 palier-container">
+            <h1 class="text-center mb-4">ESCULTURAS EN EL HALL</h1>
+            <h2 class="text-center mb-2">PALIER ESCULTOR</h2>
+            <h3 class="text-center mb-5">Mariano Pallero</h3>
+            <div class="row palier-grid">
+                <!-- Ejemplo de escultura -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Ave Fenix</h3>
+                            <p>En esta representación del Ave Fénix, he buscado trascender la frialdad del metal para insuflarle la ardiente promesa de la renovación. Cada fragmento ensamblado es un testimonio de la capacidad de transformación, un recordatorio de que incluso de las cenizas pueden surgir nuevas y brillantes formas.
+                            Las alas, extendiéndose con fuerza y gracia, simbolizan la resiliencia del espíritu, la capacidad de elevarse una y otra vez. Mi intención es que esta escultura inspire a contemplar la belleza que emerge de la adversidad y la eterna esperanza que reside en el ciclo de la vida.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/ave_fenix.gif" alt="Ave Fénix" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Ave Fenix</h3>
+                                <p>En esta representación del Ave Fénix, he buscado trascender la frialdad del metal para insuflarle la ardiente promesa de la renovación. Cada fragmento ensamblado es un testimonio de la capacidad de transformación, un recordatorio de que incluso de las cenizas pueden surgir nuevas y brillantes formas.
+                                Las alas, extendiéndose con fuerza y gracia, simbolizan la resiliencia del espíritu, la capacidad de elevarse una y otra vez. Mi intención es que esta escultura inspire a contemplar la belleza que emerge de la adversidad y la eterna esperanza que reside en el ciclo de la vida.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Capibara</h3>
+                            <p>En esta pieza, he buscado capturar la serenidad y la forma distintiva de un carpincho (capibara)
+                            utilizando la riqueza textural de la chatarra. Cada engranaje y fragmento metálico se entrelaza para dar vida a la silueta de este tranquilo habitante de nuestras tierras. La calidez de los tonos cobrizos contrasta con los detalles más oscuros, creando una sensación de volumen y profundidad a través de las perforaciones y las superposiciones. Mi intención al trabajar con estos materiales reciclados es no solo darles una segunda oportunidad, sino también evocar la conexión entre la naturaleza y la huella humana, transformando lo industrial en una representación orgánica y entrañable.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/capibara.gif" alt="Capibara" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Capibara</h3>
+                                <p>En esta pieza, he buscado capturar la serenidad y la forma distintiva de un carpincho (capibara)
+                                utilizando la riqueza textural de la chatarra. Cada engranaje y fragmento metálico se entrelaza para dar vida a la silueta de este tranquilo habitante de nuestras tierras. La calidez de los tonos cobrizos contrasta con los detalles más oscuros, creando una sensación de volumen y profundidad a través de las perforaciones y las superposiciones. Mi intención al trabajar con estos materiales reciclados es no solo darles una segunda oportunidad, sino también evocar la conexión entre la naturaleza y la huella humana, transformando lo industrial en una representación orgánica y entrañable.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Buho</h3>
+                            <p>En esta pieza, he buscado capturar la majestuosidad y la mirada penetrante del búho, un símbolo de sabiduría y misterio, a través del ensamblaje de elementos metálicos reciclados. Cada fragmento de chatarra se une para evocar la textura y la forma imponente de su figura. Las perforaciones permiten que la luz interactúe con la escultura, creando sombras que acentúan su volumen y profundidad. Mi intención al trabajar con estos materiales es darles una nueva vida, transformando lo que fue desechado en una representación artística que celebra la belleza y la singularidad de la naturaleza.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/buho.gif" alt="Buho" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Buho</h3>
+                                <p>En esta pieza, he buscado capturar la majestuosidad y la mirada penetrante del búho, un símbolo de sabiduría y misterio, a través del ensamblaje de elementos metálicos reciclados. Cada fragmento de chatarra se une para evocar la textura y la forma imponente de su figura. Las perforaciones permiten que la luz interactúe con la escultura, creando sombras que acentúan su volumen y profundidad. Mi intención al trabajar con estos materiales es darles una nueva vida, transformando lo que fue desechado en una representación artística que celebra la belleza y la singularidad de la naturaleza.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>El Gato</h3>
+                            <p>En esta escultura, he buscado capturar la elegancia y la curiosidad innata de un gato a través del ensamblaje de metales reciclados con un acabado que juega con la luz y la sombra.
+                            Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos."</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/el_gato.gif" alt="El Gato" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>El Gato</h3>
+                                <p>En esta escultura, he buscado capturar la elegancia y la curiosidad innata de un gato a través del ensamblaje de metales reciclados con un acabado que juega con la luz y la sombra.
+                                Cada pieza, cuidadosamente seleccionada y unida, contribuye a la forma estilizada del felino, resaltando su postura alerta y sus característicos rasgos. Mi intención al trabajar con estos materiales es trascender su origen industrial, transformándolos en una representación que evoca la gracia y el misterio que tanto admiro de los gatos."</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Halcón Rapaz</h3>
+                            <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/halcon_rapaz.gif" alt="Halcón Rapaz" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Halcón Rapaz</h3>
+                                <p>En esta escultura, he buscado congelar el instante dramático del ataque de un halcón Cada pieza de metal reciclado se ensambla para transmitir la tensión y la fuerza concentrada en el momento previo al impacto. Las alas extendidas y la postura del cuerpo reflejan la precisión y la velocidad letal de esta ave rapaz. Mi intención, capturar la intensidad de la naturaleza en acción, utilizando la rigidez del metal para evocar la energía y la determinación de este depredador en su búsqueda de la presa.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Golondrina</h3>
+                            <p>En esta escultura, he buscado capturar la ligereza y la gracia del vuelo de una golondrina. Cada pieza de metal se ensambla para evocar la forma aerodinámica y la fluidez de sus alas en pleno movimiento. He jugado con los espacios vacíos y las texturas para transmitir la sensación de ligereza y la agilidad característica de estas aves. Mi intención es celebrar la belleza de la naturaleza en movimiento, transformando la rigidez del metal en una imagen dinámica y evocadora de la libertad del cielo.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/golondrina.gif" alt="Golondrina" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Golondrina</h3>
+                                <p>En esta escultura, he buscado capturar la ligereza y la gracia del vuelo de una golondrina. Cada pieza de metal se ensambla para evocar la forma aerodinámica y la fluidez de sus alas en pleno movimiento. He jugado con los espacios vacíos y las texturas para transmitir la sensación de ligereza y la agilidad característica de estas aves. Mi intención es celebrar la belleza de la naturaleza en movimiento, transformando la rigidez del metal en una imagen dinámica y evocadora de la libertad del cielo.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Golden Cat</h3>
+                            <p>En esta pieza, he querido capturar un instante lúdico y lleno de curiosidad felina. La agilidad del gato, casi danzando sobre sus patas traseras, contrasta con la solidez de los materiales de desecho que le dan forma. Cada engranaje y pieza metálica perforada se convierte en parte de una textura vibrante, permitiendo que la luz juegue a través de la estructura y defina su movimiento. La delicada conexión con la mariposa, suspendida en el aire, añade un toque de fantasía y evoca la naturaleza cazadora y juguetona del felino. Mi intención es trascender la naturaleza industrial de la chatarra para crear una escena que transmita alegría y una conexión sutil con el mundo natural.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/golden_cat.gif" alt="Golden Cat" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Golden Cat</h3>
+                                <p>En esta pieza, he querido capturar un instante lúdico y lleno de curiosidad felina. La agilidad del gato, casi danzando sobre sus patas traseras, contrasta con la solidez de los materiales de desecho que le dan forma. Cada engranaje y pieza metálica perforada se convierte en parte de una textura vibrante, permitiendo que la luz juegue a través de la estructura y defina su movimiento. La delicada conexión con la mariposa, suspendida en el aire, añade un toque de fantasía y evoca la naturaleza cazadora y juguetona del felino. Mi intención es trascender la naturaleza industrial de la chatarra para crear una escena que transmita alegría y una conexión sutil con el mundo natural.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repite el bloque para más esculturas -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
+                            <h3>Halcón</h3>
+                            <p>En esta escultura, he tratado de plasmar la velocidad y la precisión implacable de un halcón peregrino en pleno picada. Cada fragmento de metal se ensambla para evocar la forma aerodinámica y la tensión muscular de esta ave rapaz en su descenso vertiginoso. He buscado capturar ese instante de potencia concentrada, donde la fuerza y la elegancia se fusionan en una imagen impactante. Mi intención es transmitir la sensación de la naturaleza en su estado más puro y dinámico, utilizando la rigidez del metal para sugerir la increíble velocidad y agilidad de este depredador aéreo.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <img src="/images/palier/halcon.gif" alt="Halcón" class="palier-gif">
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>Halcón</h3>
+                                <p>En esta escultura, he tratado de plasmar la velocidad y la precisión implacable de un halcón peregrino en pleno picada. Cada fragmento de metal se ensambla para evocar la forma aerodinámica y la tensión muscular de esta ave rapaz en su descenso vertiginoso. He buscado capturar ese instante de potencia concentrada, donde la fuerza y la elegancia se fusionan en una imagen impactante. Mi intención es transmitir la sensación de la naturaleza en su estado más puro y dinámico, utilizando la rigidez del metal para sugerir la increíble velocidad y agilidad de este depredador aéreo.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     `;
@@ -349,62 +497,6 @@ function setupNewsletterForm() {
     }
 }
 
-
-// Cargar el próximo espectáculo
-// function loadNextShow() {
-//     fetch('api/get_next_show.php')
-//         .then(res => {
-//             if (!res.ok) {
-//                 throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
-//             }
-//             return res.json();
-//         })
-//         .then(response => {
-//             const content = document.getElementById('next-show-content');
-//             if (!content) return;
-
-//             if (response.success && response.data) {
-//                 const show = response.data;
-
-//                 // Validar imágenes y establecer valores predeterminados
-//                 const bannerImage = show.bannerImage && show.bannerImage.trim() !== '' ? show.bannerImage : show.image;
-//                 const fallbackImage = show.image && show.image.trim() !== '' ? show.image : 'ruta/a/imagen-por-defecto.jpg';
-
-//                 // Parsear la fecha manualmente para evitar problemas de zona horaria
-//                 const [year, month, day] = show.date.split('-');
-//                 const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
-
-//                 content.innerHTML = `
-//                     <a href="#/show/${show.id_show}">
-//                         <h2>PRÓXIMAMENTE</h2>
-//                         <picture>
-//                             <source media="(min-width: 750px)" srcset="${bannerImage}">
-//                             <img src="${fallbackImage}" alt="${show.name}" class="banner-image">
-//                         </picture>
-//                     </a>
-//                     <div class="banner-info">
-//                         <h2>${show.name}</h2>
-//                         <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })} - ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-//                         <a href="#/show/${show.id_show}">
-//                             <button class="buy-button">Comprar entradas</button>
-//                         </a>
-//                     </div>
-//                 `;
-//             } else {
-//                 content.innerHTML = '';
-//                 content.style.display = 'none';
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error al cargar el próximo espectáculo:', error);
-//             const content = document.getElementById('next-show-content');
-//             if (content) {
-//                 content.innerHTML = '';
-//                 content.style.display = 'none';
-//             }
-//         });
-// }
-
 function loadNextShow() {
     fetch('api/get_upcoming_shows.php')
         .then(res => {
@@ -435,6 +527,9 @@ function loadNextShow() {
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
                                 </picture>
                             </a>
+                            <div class="carousel-caption" style="text-align: left; left: 20px; bottom: 20px; background: none; padding: 0;">
+                                <a href="#/show/${show.id_show}" class="btn btn-more-info">Más info</a>
+                            </div>
                         </div>
                     `;
                 }).join('');
@@ -454,7 +549,7 @@ function loadNextShow() {
                 const carouselElement = document.getElementById('showsCarousel');
                 if (carouselElement && !carouselElement._carousel) {
                     carouselElement._carousel = new bootstrap.Carousel(carouselElement, {
-                        interval: 2000, // Change slide every 2 seconds
+                        interval: 2000,
                         wrap: true
                     });
                 }
@@ -473,7 +568,6 @@ function loadNextShow() {
         });
 }
 
-// Cargar cartelera
 function loadCartelera() {
     fetch('api/get_shows.php')
         .then(res => {
@@ -483,12 +577,11 @@ function loadCartelera() {
             return res.json();
         })
         .then(response => {
-            // Asegurarnos de que response.data exista y sea un array
             if (!response.success || !Array.isArray(response.data)) {
                 throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
             }
 
-            const shows = response.data; // Extraemos el array de data
+            const shows = response.data;
             const container = document.getElementById('shows-container');
             const monthSelect = document.getElementById('month-select');
             const searchInput = document.getElementById('search-input');
@@ -509,11 +602,10 @@ function loadCartelera() {
                 });
 
                 container.innerHTML = filteredShows.map(show => {
-                    // Parsear la fecha manualmente para evitar problemas de zona horaria
                     let formattedDate = 'Fecha no disponible';
                     if (show.date) {
                         const [year, month, day] = show.date.split('-');
-                        const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+                        const parsedDate = new Date(year, month - 1, day);
                         formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
                     }
 
@@ -550,7 +642,6 @@ function loadCartelera() {
         });
 }
 
-// Cargar detalle del espectáculo
 function loadShowDetail(id) {
     fetch(`api/get_show.php?id=${id}`)
         .then(res => {
@@ -560,23 +651,19 @@ function loadShowDetail(id) {
             return res.json();
         })
         .then(response => {
-            console.log('Respuesta de get_show.php:', response); // Depuración
+            console.log('Respuesta de get_show.php:', response);
 
-            // Verificar si la respuesta tiene éxito y contiene datos
             if (!response.success || !response.data) {
                 throw new Error(response.message || 'No se encontraron datos del espectáculo');
             }
 
-            const show = response.data; // Extraemos los datos del espectáculo
+            const show = response.data;
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
-  
-            // Parsear la fecha manualmente para evitar problemas de zona horaria
             const [year, month, day] = show.date.split('-');
-            const parsedDate = new Date(year, month - 1, day); // month es 0-based en JavaScript
+            const parsedDate = new Date(year, month - 1, day);
 
-            // Mostrar los datos en la interfaz
             content.innerHTML = `
                 <div class="show-image-container">
                     ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name || 'Espectáculo'}" class="show-image">` : ''}
@@ -586,7 +673,7 @@ function loadShowDetail(id) {
                     <p class="show-description">${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
-                <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                    <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                     <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
                     <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>
@@ -603,7 +690,6 @@ function loadShowDetail(id) {
         });
 }
 
-// Configurar formulario de contacto
 function setupContactoForm() {
     const form = document.getElementById('contacto-form');
     if (!form) return;
@@ -649,7 +735,6 @@ function setupContactoForm() {
     }, { once: true });
 }
 
-// Configurar formulario de admin
 function setupAdminForm() {
     const form = document.getElementById('admin-form');
     if (!form) {
@@ -660,7 +745,6 @@ function setupAdminForm() {
     form.addEventListener('submit', async e => {
         e.preventDefault();
 
-        // Capturar valores directamente de los campos para depuración
         const name = document.getElementById('name').value;
         const description = document.getElementById('description').value;
         const price = document.getElementById('price').value;
@@ -680,7 +764,6 @@ function setupAdminForm() {
         console.log('link:', link);
         console.log('edit-id:', editId);
 
-        // Construir FormData manualmente
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
@@ -691,7 +774,6 @@ function setupAdminForm() {
         formData.append('link', link);
         formData.append('edit-id', editId);
 
-        // Manejar archivos
         const imageInput = document.getElementById('image');
         const bannerImageInput = document.getElementById('bannerImage');
         if (imageInput.files.length > 0) {
@@ -701,13 +783,11 @@ function setupAdminForm() {
             formData.append('bannerImage', bannerImageInput.files[0]);
         }
 
-        // Imprimir FormData para depuración
         console.log('Datos en FormData antes de enviar:');
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
 
-        // Validar que los campos requeridos tengan valores
         if (!name || !mes || !date || !hora || !link) {
             Swal.fire('Error', 'Por favor, complete todos los campos requeridos', 'error');
             return;
@@ -736,7 +816,6 @@ function setupAdminForm() {
     });
 }
 
-// Cargar espectáculos en el admin
 function loadAdminShows() {
     fetch('api/get_shows.php')
         .then(res => {
@@ -746,12 +825,11 @@ function loadAdminShows() {
             return res.json();
         })
         .then(response => {
-            // Asegurarnos de que response.data exista y sea un array
             if (!response.success || !Array.isArray(response.data)) {
                 throw new Error(response.message || 'La respuesta del servidor no contiene un array válido de espectáculos');
             }
 
-            const shows = response.data; // Extraemos el array de data
+            const shows = response.data;
             const container = document.getElementById('admin-shows-container');
             const searchInput = document.getElementById('admin-search');
             const monthSelect = document.getElementById('admin-month-select');
@@ -861,5 +939,28 @@ function deleteShow(id) {
                     Swal.fire('Error', 'Error al eliminar el espectáculo', 'error');
                 });
         }
+    });
+}
+
+function setupPalierDescriptions() {
+    const descButtons = document.querySelectorAll('.btn-palier-desc');
+    const closeButtons = document.querySelectorAll('.btn-close-desc');
+
+    descButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const overlay = button.nextElementSibling;
+            if (overlay) {
+                overlay.style.display = 'flex';
+            }
+        });
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const overlay = button.parentElement;
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        });
     });
 }

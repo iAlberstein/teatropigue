@@ -439,11 +439,11 @@ function loadNextShow() {
                     `;
                 }).join('');
 
-                // Initialize carousel with 2-second interval
-                const carousel = document.getElementById('showsCarousel');
-                if (carousel) {
-                    new bootstrap.Carousel(carousel, {
-                        interval: 3000, // Change slide every 2 seconds
+                // Initialize carousel only if not already initialized
+                const carouselElement = document.getElementById('showsCarousel');
+                if (carouselElement && !carouselElement._carousel) {
+                    carouselElement._carousel = new bootstrap.Carousel(carouselElement, {
+                        interval: 2000, // Change slide every 2 seconds
                         wrap: true
                     });
                 }

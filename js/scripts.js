@@ -218,6 +218,25 @@ function palierView() {
                 <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
                     <div class="palier-card">
                         <div class="palier-desc desktop-only">
+                            <h3>La Bailarina</h3>
+                            <p>En esta escultura, he buscado congelar un instante de gracia y equilibrio en el movimiento de una bailarina. Cada fragmento de metal se ensambla para evocar la delicadeza de su pose y la tensión de sus músculos en plena danza. He jugado con los vacíos y las formas para sugerir la ligereza y la fluidez inherentes al ballet. Mi intención es transformar la solidez del material en una representación dinámica y evocadora de la belleza del cuerpo en movimiento.</p>
+                        </div>
+                        <div class="palier-gif-container">
+                            <video src="/images/palier/bailarina.mp4" alt="La Bailarina" class="palier-gif" autoplay loop muted playsinline></video>
+                            <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
+                            <div class="palier-desc-overlay">
+                                <h3>La Bailarina</h3>
+                                <p>En esta escultura, he buscado congelar un instante de gracia y equilibrio en el movimiento de una bailarina. Cada fragmento de metal se ensambla para evocar la delicadeza de su pose y la tensión de sus músculos en plena danza. He jugado con los vacíos y las formas para sugerir la ligereza y la fluidez inherentes al ballet. Mi intención es transformar la solidez del material en una representación dinámica y evocadora de la belleza del cuerpo en movimiento.</p>
+                                <button class="btn btn-close-desc">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejemplo de escultura -->
+                <div class="col-lg-6 col-md-6 col-sm-12 palier-item mb-4">
+                    <div class="palier-card">
+                        <div class="palier-desc desktop-only">
                             <h3>Ave Fenix</h3>
                             <p>En esta representación del Ave Fénix, he buscado trascender la frialdad del metal para insuflarle la ardiente promesa de la renovación. Cada fragmento ensamblado es un testimonio de la capacidad de transformación, un recordatorio de que incluso de las cenizas pueden surgir nuevas y brillantes formas.
                             Las alas, extendiéndose con fuerza y gracia, simbolizan la resiliencia del espíritu, la capacidad de elevarse una y otra vez. Mi intención es que esta escultura inspire a contemplar la belleza que emerge de la adversidad y la eterna esperanza que reside en el ciclo de la vida.</p>

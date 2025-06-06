@@ -196,7 +196,7 @@ function palierView() {
                             </p>
                         </div>
                         <div class="palier-gif-container">
-                            <img src="/images/palier/pallero.jpg" alt="Ave Fénix" class="palier-gif">
+                            <img src="/images/palier/pallero.jpg" alt="Mariano Pallero" class="palier-gif">
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Mariano Pallero</h3>

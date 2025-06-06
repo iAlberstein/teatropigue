@@ -199,7 +199,7 @@ function palierView() {
                             <img src="/images/palier/pallero.jpg" alt="Ave Fénix" class="palier-gif">
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
-                                <h3>Capibara</h3>
+                                <h3>Mariano Pallero</h3>
                                 <p>Mariano Palier lleva el arte de Pigüé a Qatar!
 
                                 Con gran entusiasmo, el escultor Mariano Pallero Palier, oriundo de Pigüé, Argentina, anuncia su participación en la prestigiosa exposición de arte Quiaf 2025 en Qatar, a realizarse a finales de este año.

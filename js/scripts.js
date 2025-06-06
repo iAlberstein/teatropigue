@@ -169,7 +169,7 @@ function palierView() {
             <h1 class="text-center mb-4">ESCULTURAS EN EL HALL</h1>
             <h2 class="text-center mb-2">PALIER ESCULTOR</h2>
             <h3 class="text-center mb-5">Mariano Pallero</h3>
-            <p class="text-center mb-4">Para consultas y adquisición de obras por favor, contactar a:</p>
+            <p class="text-center mb-4">MUESTRA PERMANENTE DE MIÉRCOLES A VIERNES DE 18:00 A 20:30<br> Para consultas y adquisición de obras por favor, contactar a:</p>
             <div class="text-center">
                 <a href="https://wa.me/5492923442001" class="btn btn-success me-2" target="_blank">
                     <i class="bi bi-whatsapp"></i> WhatsApp
@@ -186,11 +186,11 @@ function palierView() {
                     <div class="palier-card">
                         <div class="palier-desc desktop-only">
                             <h3>Mariano Pallero</h3>
-                            <p>Mariano Palier lleva el arte de Pigüé a Qatar!
+                            <p>Mariano Palier lleva el arte de Pigüé a Qatar!<br>
 
-                            Con gran entusiasmo, el escultor Mariano Pallero Palier, oriundo de Pigüé, Argentina, anuncia su participación en la prestigiosa exposición de arte Quiaf 2025 en Qatar, a realizarse a finales de este año.
+                            Con gran entusiasmo, el escultor Mariano Pallero Palier, oriundo de Pigüé, Argentina, anuncia su participación en la prestigiosa exposición de arte Quiaf 2025 en Qatar, a realizarse a finales de este año.<br>
                             
-                            En esta importante plataforma internacional, Palier presentará piezas únicas que reflejan su pasión y su singular habilidad para transformar la chatarra en esculturas vibrantes y llenas de vida. Sus obras prometen cautivar al público con la elegancia de sus formas y la sorprendente belleza que emana de los materiales ya en desuso
+                            En esta importante plataforma internacional, Palier presentará piezas únicas que reflejan su pasión y su singular habilidad para transformar la chatarra en esculturas vibrantes y llenas de vida. Sus obras prometen cautivar al público con la elegancia de sus formas y la sorprendente belleza que emana de los materiales ya en desuso.<br>
                             
                             No pierdan la oportunidad de seguir de cerca este hito artístico.
                             </p>
@@ -200,11 +200,11 @@ function palierView() {
                             <button class="btn btn-palier-desc mobile-only">Ver descripción</button>
                             <div class="palier-desc-overlay">
                                 <h3>Mariano Pallero</h3>
-                                <p>Mariano Palier lleva el arte de Pigüé a Qatar!
+                                <p>Mariano Palier lleva el arte de Pigüé a Qatar!<br>
 
-                                Con gran entusiasmo, el escultor Mariano Pallero Palier, oriundo de Pigüé, Argentina, anuncia su participación en la prestigiosa exposición de arte Quiaf 2025 en Qatar, a realizarse a finales de este año.
+                                Con gran entusiasmo, el escultor Mariano Pallero Palier, oriundo de Pigüé, Argentina, anuncia su participación en la prestigiosa exposición de arte Quiaf 2025 en Qatar, a realizarse a finales de este año.<br>
                                 
-                                En esta importante plataforma internacional, Palier presentará piezas únicas que reflejan su pasión y su singular habilidad para transformar la chatarra en esculturas vibrantes y llenas de vida. Sus obras prometen cautivar al público con la elegancia de sus formas y la sorprendente belleza que emana de los materiales ya en desuso
+                                En esta importante plataforma internacional, Palier presentará piezas únicas que reflejan su pasión y su singular habilidad para transformar la chatarra en esculturas vibrantes y llenas de vida. Sus obras prometen cautivar al público con la elegancia de sus formas y la sorprendente belleza que emana de los materiales ya en desuso.<br>
                                 
                                 No pierdan la oportunidad de seguir de cerca este hito artístico.
                                 </p>

@@ -129,9 +129,8 @@ footer {
 }
 
 .banner-image {
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  max-height: 500px;
 }
 
 .btn-more-info {
@@ -723,7 +722,7 @@ footer {
   }
 
   .banner-image {
-      max-height: 300px;
+      max-width: 100%;
       height: auto;
   }
 }
@@ -791,7 +790,7 @@ footer .social-icons a:hover {
   }
 
   .banner-image {
-    width: 100%;
+    max-width: 100%;
     height: auto;
   }
 

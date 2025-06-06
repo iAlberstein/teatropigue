@@ -534,13 +534,22 @@ function loadNextShow() {
                     carouselContainer.insertAdjacentElement('afterend', buttonContainer);
                 }
 
-                // Initialize carousel only if not already initialized
+                // Initialize or update carousel
                 const carouselElement = document.getElementById('showsCarousel');
-                if (carouselElement && !carouselElement._carousel) {
-                    carouselElement._carousel = new bootstrap.Carousel(carouselElement, {
-                        interval: 2000,
-                        wrap: true
-                    });
+                if (carouselElement) {
+                    // Check if carousel is already initialized
+                    let carousel = bootstrap.Carousel.getInstance(carouselElement);
+                    if (!carousel) {
+                        // Initialize new carousel with 3-second interval
+                        carousel = new bootstrap.Carousel(carouselElement, {
+                            interval: 3000, // 3 seconds
+                            wrap: true,
+                            ride: 'carousel' // Ensure auto-cycling
+                        });
+                    } else {
+                        // Reset cycle to ensure it starts cycling again
+                        carousel.cycle();
+                    }
                 }
             } else {
                 content.innerHTML = '';

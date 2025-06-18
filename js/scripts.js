@@ -668,10 +668,12 @@ function loadCartelera() {
 
                 container.innerHTML = filteredShows.map(show => {
                     let formattedDate = 'Fecha no disponible';
-                    if (show.date) {
+                    if (show.date && /^\d{4}-\d{2}-\d{2}$/.test(show.date)) {
                         const [year, month, day] = show.date.split('-');
                         const parsedDate = new Date(year, month - 1, day);
-                        formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
+                        if (!isNaN(parsedDate)) {
+                            formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
+                        }
                     }
 
                     return `

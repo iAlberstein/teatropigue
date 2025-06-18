@@ -34,19 +34,10 @@ if ($conex->connect_error) {
     exit;
 }
 
-// Obtener el ID del espectáculo
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($id === 0) {
-    $response['message'] = 'ID inválido';
-    echo json_encode($response);
-    exit;
-}
-
-// Obtener el espectáculo
+// Obtener todos los espectáculos
 try {
-    $query = "SELECT * FROM shows WHERE id_show = ?";
+    $query = "SELECT * FROM shows";
     $stmt = $conex->prepare($query);
-    $stmt->bind_param('i', $id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -56,15 +47,19 @@ try {
         exit;
     }
 
-    $show = $result->fetch_assoc();
-    if ($show) {
+    $shows = [];
+    while ($row = $result->fetch_assoc()) {
+        $shows[] = $row;
+    }
+
+    if (!empty($shows)) {
         $response['success'] = true;
-        $response['data'] = $show;
+        $response['data'] = $shows;
     } else {
-        $response['message'] = 'Espectáculo no encontrado';
+        $response['message'] = 'No se encontraron espectáculos';
     }
 } catch (Exception $e) {
-    $response['message'] = 'Error al obtener el espectáculo: ' . $e->getMessage();
+    $response['message'] = 'Error al obtener los espectáculos: ' . $e->getMessage();
 }
 
 echo json_encode($response);

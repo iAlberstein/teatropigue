@@ -651,12 +651,14 @@ function loadCartelera() {
 
             if (!container || !monthSelect || !searchInput) return;
 
+            // Generar opciones de meses
             const months = [...new Set(shows.map(show => show.mes))];
             monthSelect.innerHTML = '<option value="">Seleccionar mes</option>';
             months.forEach(month => {
                 monthSelect.innerHTML += `<option value="${month}">${month}</option>`;
             });
 
+            // Función para renderizar shows con filtros
             function renderShows(filter = '', month = '') {
                 const filteredShows = shows.filter(show => {
                     const matchesSearch = show.name.toLowerCase().includes(filter.toLowerCase());
@@ -687,14 +689,17 @@ function loadCartelera() {
                 }).join('');
             }
 
+            // Renderizar shows inicialmente
             renderShows();
 
+            // Event listeners sin { once: true }
             searchInput.addEventListener('input', () => {
                 renderShows(searchInput.value, monthSelect.value);
-            }, { once: true });
+            });
+
             monthSelect.addEventListener('change', () => {
                 renderShows(searchInput.value, monthSelect.value);
-            }, { once: true });
+            });
         })
         .catch(error => {
             console.error('Error al cargar la cartelera:', error);

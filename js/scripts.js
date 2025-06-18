@@ -710,6 +710,18 @@ function loadCartelera() {
         });
 }
 
+function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+searchInput.addEventListener('input', debounce(() => {
+    renderShows(searchInput.value, monthSelect.value);
+}, 300));
+
 function loadShowDetail(id) {
     fetch(`api/get_show.php?id=${id}`)
         .then(res => {

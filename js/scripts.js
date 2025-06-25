@@ -731,6 +731,7 @@ function loadShowDetail(id) {
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
+            // Validate date format and parse if valid
             let formattedDate = 'Fecha no disponible';
             if (show.date && /^\d{4}-\d{2}-\d{2}$/.test(show.date)) {
                 const [year, month, day] = show.date.split('-');
@@ -744,18 +745,27 @@ function loadShowDetail(id) {
                 }
             }
 
+            // Sanitize and validate other fields
+            const name = show.name || 'Nombre no disponible';
+            const description = show.description || 'Descripción no disponible';
+            const image = show.image && show.image.trim() !== '' ? show.image : '';
+            const hora = show.hora ? show.hora.substring(0, 5) : 'Hora no disponible';
+            const link = show.link && show.link.trim() !== '' 
+                ? (show.link.startsWith('http') ? show.link : 'https://' + show.link) 
+                : '#';
+
             content.innerHTML = `
                 <div class="show-image-container">
-                    ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name || 'Espectáculo'}" class="show-image">` : ''}
+                    ${image ? `<img src="${image}" alt="${name}" class="show-image">` : ''}
                 </div>
                 <div class="show-info-container">
-                    <h2>${show.name || 'Nombre no disponible'}</h2>
-                    <p class="show-description">${show.description || 'Descripción no disponible'}</p>
+                    <h2>${name}</h2>
+                    <p class="show-description">${description}</p>
                 </div>
                 <div class="show-extra-container">
                     <p>${formattedDate}</p>
-                    <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
-                    <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
+                    <p><strong>Hora:</strong> ${hora} hs</p>
+                    <a href="${link}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>
                     </a>
                 </div>

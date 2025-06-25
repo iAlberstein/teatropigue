@@ -731,8 +731,18 @@ function loadShowDetail(id) {
             const content = document.getElementById('show-detail-content');
             if (!content) return;
 
-            const [year, month, day] = show.date.split('-');
-            const parsedDate = new Date(year, month - 1, day);
+            let formattedDate = 'Fecha no disponible';
+            if (show.date && /^\d{4}-\d{2}-\d{2}$/.test(show.date)) {
+                const [year, month, day] = show.date.split('-');
+                const parsedDate = new Date(year, month - 1, day);
+                if (!isNaN(parsedDate)) {
+                    formattedDate = parsedDate.toLocaleDateString('es-AR', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                }
+            }
 
             content.innerHTML = `
                 <div class="show-image-container">
@@ -743,7 +753,7 @@ function loadShowDetail(id) {
                     <p class="show-description">${show.description || 'Descripción no disponible'}</p>
                 </div>
                 <div class="show-extra-container">
-                    <p>${parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                    <p>${formattedDate}</p>
                     <p><strong>Hora:</strong> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'} hs</p>
                     <a href="${(show.link && show.link.startsWith('http')) ? show.link : (show.link ? 'https://' + show.link : '#')}" target="_blank" rel="noopener noreferrer">
                         <button class="buy-button">Comprar entradas</button>

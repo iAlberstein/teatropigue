@@ -169,7 +169,7 @@ function palierView() {
             <h1 class="text-center mb-4">ESCULTURAS EN EL HALL</h1>
             <h2 class="text-center mb-2">PALIER ESCULTOR</h2>
             <h3 class="text-center mb-5">Mariano Pallero</h3>
-            <p class="text-center mb-4">MUESTRA PERMANENTE<br> MIÉRCOLES A VIERNES DE 18:00 A 20:30<br> Para consultas y adquisición de obras por favor, contactar a:</p>
+            
             <div class="text-center">
                 <a href="https://wa.me/5492923442001" class="btn btn-success me-2" target="_blank">
                     <i class="bi bi-whatsapp"></i> WhatsApp

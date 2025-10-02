@@ -6,7 +6,8 @@ const routes = {
     '/historia': historiaView,
     '/contacto': contactoView,
     '/admin33860988': adminView,
-    '/show/:id': showDetailView
+    '/show/:id': showDetailView,
+    '/boleteria': boleteriaView
 };
 
 function navigateTo(path) {
@@ -445,6 +446,49 @@ function contactoView() {
                 </div>
                 <button type="submit">Enviar</button>
             </form>
+        </div>
+    `;
+}
+
+// Nueva vista: Información de boletería (venta en efectivo)
+function boleteriaView() {
+    return `
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h1 class="h3 mb-3">Venta de entradas en boletería</h1>
+                            <p class="lead mb-3">
+                                Para este espectáculo, las entradas se venden <strong>únicamente en efectivo</strong> en la boletería del Teatro Español Pigüé.
+                            </p>
+                            <p class="mb-1"><strong>Dirección:</strong> España 120, Pigüé, Buenos Aires</p>
+                            <p class="text-muted mb-0">Entre Manuel Belgrano y Cdad. de Rodez</p>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h2 class="h5 mb-3">Cómo llegar</h2>
+                            <div class="ratio ratio-4x3">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197.55826217061195!2d-62.406507967647926!3d-37.6037547901583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95eb9506e22c07bd%3A0xb3e65a95990c3942!2zVGVhdHJvIEVzcGHDsW9sIFBpZ8O8w6k!5e0!3m2!1ses!2sar!4v1759366603129!5m2!1ses!2sar" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Teatro Español Pigüé"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h2 class="h5 mb-3">Horarios de boletería</h2>
+                            <p class="mb-3">Presentate en estos horarios para adquirir tus entradas:</p>
+                            <div class="text-center">
+                                <img src="/uploads/horarios-boleteria.jpg" alt="Horarios de boletería: Miércoles a Viernes 18:00 a 20:30. Días de función: 2 horas antes del show" class="img-fluid rounded" />
+                                <p class="text-muted mt-2" style="font-size:0.9rem;">Si no ves la imagen, asegurate de subirla como <code>uploads/horarios-boleteria.jpg</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     `;
 }

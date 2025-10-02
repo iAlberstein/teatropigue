@@ -1,0 +1,23 @@
+# Enable URL rewriting
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the request is for an existing file or directory, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Exclude API endpoints from SPA fallback
+  RewriteCond %{REQUEST_URI} ^/api/ [NC]
+  RewriteRule ^ - [L]
+
+  # Exclude common static asset extensions from SPA fallback (images, css, js, fonts, media)
+  RewriteCond %{REQUEST_URI} \.(?:css|js|map|json|png|jpe?g|gif|svg|webp|ico|mp4|mp3|wav|ogg|woff2?|ttf|eot)$ [NC]
+  RewriteRule ^ - [L]
+
+  # Redirect everything else to index.html (SPA entry point)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Fallback if mod_rewrite is not available: serve index.html as 404 handler
+ErrorDocument 404 /index.html

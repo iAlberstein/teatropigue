@@ -12,12 +12,14 @@ const routes = {
 
 function navigateTo(path) {
     console.log('Navigating to:', path); // Depuración
-    window.history.pushState({}, '', '#' + path);
+    // Asegurar que la ruta comience con '/'
+    const normalized = path.startsWith('/') ? path : '/' + path.replace(/^#\/?/, '');
+    window.history.pushState({}, '', normalized);
     renderView();
 }
 
 function parseRoute() {
-    const path = window.location.hash.slice(1) || '/';
+    const path = window.location.pathname || '/';
     console.log('Parsing route:', path); // Depuración
     const routeKeys = Object.keys(routes);
     for (let route of routeKeys) {
@@ -43,21 +45,21 @@ function renderView() {
             app.innerHTML = handler(...params);
 
             // Lógica específica según la vista después de renderizar
-            if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
+            if (window.location.pathname === '/' || window.location.pathname === '/home') {
                 console.log('Loading home view specific logic...');
                 setupNewsletterForm();
                 loadNextShow();
-            } else if (window.location.hash.startsWith('#/cartelera')) {
+            } else if (window.location.pathname.startsWith('/cartelera')) {
                 loadCartelera();
-            } else if (window.location.hash.startsWith('#/show/')) {
-                const id = window.location.hash.split('/').pop();
+            } else if (window.location.pathname.startsWith('/show/')) {
+                const id = window.location.pathname.split('/').pop();
                 loadShowDetail(id);
-            } else if (window.location.hash === '#/contacto') {
+            } else if (window.location.pathname === '/contacto') {
                 setupContactoForm();
-            } else if (window.location.hash === '#/admin33860988') {
+            } else if (window.location.pathname === '/admin33860988') {
                 setupAdminForm();
                 loadAdminShows();
-            } else if (window.location.hash === '#/palier') {
+            } else if (window.location.pathname === '/palier') {
                 setupPalierDescriptions();
             }
 
@@ -65,7 +67,8 @@ function renderView() {
             setupNavbarCollapse();
 
             // Reasignar eventos para los enlaces
-            const links = document.querySelectorAll('a[href^="#"]');
+            // Enlaces internos: comienzan con '/'. Los externos (http, mailto, tel) no se tocan
+            const links = document.querySelectorAll('a[href^="/"]');
             links.forEach(link => {
                 link.removeEventListener('click', handleLinkClick);
                 link.addEventListener('click', handleLinkClick);
@@ -91,9 +94,12 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleLinkClick(e) {
-    e.preventDefault();
-    const path = e.currentTarget.getAttribute('href').slice(1);
-    navigateTo(path);
+    const href = e.currentTarget.getAttribute('href');
+    // Solo interceptar enlaces internos relativos a la SPA
+    if (href && href.startsWith('/')) {
+        e.preventDefault();
+        navigateTo(href);
+    }
 }
 
 function setupNavbarCollapse() {
@@ -460,7 +466,7 @@ function boleteriaView() {
                         <div class="card-body">
                             <h1 class="h3 mb-3">Venta de entradas en boletería</h1>
                             <p class="lead mb-3">
-                                Para este espectáculo, las entradas se venden <strong>únicamente en efectivo</strong> en la boletería del Teatro Español Pigüé.
+                                Para este espectáculo, las entradas se venden <strong>únicamente en efectivo</strong> en boletería.
                             </p>
                             <p class="mb-1"><strong>Dirección:</strong> España 120, Pigüé, Buenos Aires</p>
                             <p class="text-muted mb-0">Entre Manuel Belgrano y Cdad. de Rodez</p>
@@ -470,7 +476,7 @@ function boleteriaView() {
                     <div class="card shadow-sm mb-4">
                         <div class="card-body">
                             <h2 class="h5 mb-3">Cómo llegar</h2>
-                            <div class="ratio ratio-4x3">
+                            <div class="ratio ratio-16x9" style="max-width: 600px; margin: 0 auto;">
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197.55826217061195!2d-62.406507967647926!3d-37.6037547901583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95eb9506e22c07bd%3A0xb3e65a95990c3942!2zVGVhdHJvIEVzcGHDsW9sIFBpZ8O8w6k!5e0!3m2!1ses!2sar!4v1759366603129!5m2!1ses!2sar" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Teatro Español Pigüé"></iframe>
                             </div>
                         </div>
@@ -478,11 +484,10 @@ function boleteriaView() {
 
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h2 class="h5 mb-3">Horarios de boletería</h2>
-                            <p class="mb-3">Presentate en estos horarios para adquirir tus entradas:</p>
+
                             <div class="text-center">
                                 <img src="/uploads/horarios-boleteria.jpg" alt="Horarios de boletería: Miércoles a Viernes 18:00 a 20:30. Días de función: 2 horas antes del show" class="img-fluid rounded" />
-                                <p class="text-muted mt-2" style="font-size:0.9rem;">Si no ves la imagen, asegurate de subirla como <code>uploads/horarios-boleteria.jpg</code>.</p>
+
                             </div>
                         </div>
                     </div>
@@ -622,7 +627,7 @@ function loadNextShow() {
 
                     return `
                         <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                            <a href="#/show/${show.id_show}">
+                            <a href="/show/${show.id_show}">
                                 <picture>
                                     <source media="(min-width: 750px)" srcset="${bannerImage}">
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
@@ -726,7 +731,7 @@ function loadCartelera() {
                             <div class="show-info">
                                 <h3>${show.name}</h3>
                                 <p>${formattedDate} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-                                <a href="#/show/${show.id_show}">
+                                <a href="/show/${show.id_show}">
                                     <button>+ Info</button>
                                 </a>
                             </div>

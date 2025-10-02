@@ -6,18 +6,20 @@ const routes = {
     '/historia': historiaView,
     '/contacto': contactoView,
     '/admin33860988': adminView,
-    '/show/:id': showDetailView
+    '/show/:id': showDetailView,
+    '/boletería': boleteriaView,
+    '/boleteria': boleteriaView
 };
 
 function navigateTo(path) {
     console.log('Navigating to:', path); // Depuración
-    const normalized = path.startsWith('/') ? path : '/' + path.replace(/^#\/?/, '');
-    window.location.hash = normalized;
+    const normalized = path.startsWith('/') ? path : '/' + path;
+    window.history.pushState({}, '', normalized);
     renderView();
 }
 
 function parseRoute() {
-    const path = window.location.hash.slice(1) || '/';
+    const path = window.location.pathname || '/';
     console.log('Parsing route:', path); // Depuración
     const routeKeys = Object.keys(routes);
     for (let route of routeKeys) {
@@ -43,21 +45,21 @@ function renderView() {
             app.innerHTML = handler(...params);
 
             // Lógica específica según la vista después de renderizar
-            if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
+            if (window.location.pathname === '/' || window.location.pathname === '/home') {
                 console.log('Loading home view specific logic...');
                 setupNewsletterForm();
                 loadNextShow();
-            } else if (window.location.hash.startsWith('#/cartelera')) {
+            } else if (window.location.pathname.startsWith('/cartelera')) {
                 loadCartelera();
-            } else if (window.location.hash.startsWith('#/show/')) {
-                const id = window.location.hash.split('/').pop();
+            } else if (window.location.pathname.startsWith('/show/')) {
+                const id = window.location.pathname.split('/').pop();
                 loadShowDetail(id);
-            } else if (window.location.hash === '#/contacto') {
+            } else if (window.location.pathname === '/contacto') {
                 setupContactoForm();
-            } else if (window.location.hash === '#/admin33860988') {
+            } else if (window.location.pathname === '/admin33860988') {
                 setupAdminForm();
                 loadAdminShows();
-            } else if (window.location.hash === '#/palier') {
+            } else if (window.location.pathname === '/palier') {
                 setupPalierDescriptions();
             }
 
@@ -65,8 +67,8 @@ function renderView() {
             setupNavbarCollapse();
 
             // Reasignar eventos para los enlaces
-            // Enlaces internos con hash
-            const links = document.querySelectorAll('a[href^="#"]');
+            // Enlaces internos sin hash (History API)
+            const links = document.querySelectorAll('a[href^="/"]');
             links.forEach(link => {
                 link.removeEventListener('click', handleLinkClick);
                 link.addEventListener('click', handleLinkClick);
@@ -92,9 +94,11 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleLinkClick(e) {
-    e.preventDefault();
-    const path = e.currentTarget.getAttribute('href').slice(1);
-    navigateTo(path);
+    const href = e.currentTarget.getAttribute('href');
+    if (href && href.startsWith('/')) {
+        e.preventDefault();
+        navigateTo(href);
+    }
 }
 
 function setupNavbarCollapse() {
@@ -622,7 +626,7 @@ function loadNextShow() {
 
                     return `
                         <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                            <a href="#/show/${show.id_show}">
+                            <a href="/show/${show.id_show}">
                                 <picture>
                                     <source media="(min-width: 750px)" srcset="${bannerImage}">
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
@@ -726,7 +730,7 @@ function loadCartelera() {
                             <div class="show-info">
                                 <h3>${show.name}</h3>
                                 <p>${formattedDate} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-                                <a href="#/show/${show.id_show}">
+                                <a href="/show/${show.id_show}">
                                     <button>+ Info</button>
                                 </a>
                             </div>
@@ -794,9 +798,39 @@ function loadShowDetail(id) {
             const description = show.description || 'Descripción no disponible';
             const image = show.image && show.image.trim() !== '' ? show.image : '';
             const hora = show.hora ? show.hora.substring(0, 5) : 'Hora no disponible';
-            const link = show.link && show.link.trim() !== '' 
-                ? (show.link.startsWith('http') ? show.link : 'https://' + show.link) 
-                : '#';
+
+            // Link handling: support internal routes (e.g., /boletería) and external URLs
+            let rawLink = (show.link || '').trim();
+            const isInternal = rawLink.startsWith('/');
+            const isBoleteria = isInternal && (rawLink === '/boletería' || rawLink === '/boleteria');
+            // Normalize external link only if provided and not internal
+            if (rawLink && !isInternal && !rawLink.startsWith('http')) {
+                rawLink = 'https://' + rawLink;
+            }
+
+            // Build purchase button depending on link type
+            let purchaseButtonHtml = '';
+            if (rawLink) {
+                if (isBoleteria) {
+                    purchaseButtonHtml = `
+                        <a href="${rawLink}">
+                            <button class="buy-button">Comprar en boletería</button>
+                        </a>
+                    `;
+                } else if (isInternal) {
+                    purchaseButtonHtml = `
+                        <a href="${rawLink}">
+                            <button class="buy-button">Comprar entradas</button>
+                        </a>
+                    `;
+                } else {
+                    purchaseButtonHtml = `
+                        <a href="${rawLink}" target="_blank" rel="noopener noreferrer">
+                            <button class="buy-button">Comprar entradas</button>
+                        </a>
+                    `;
+                }
+            }
 
             content.innerHTML = `
                 <div class="show-image-container">
@@ -809,9 +843,7 @@ function loadShowDetail(id) {
                 <div class="show-extra-container">
                     <p>${formattedDate}</p>
                     <p><strong>Hora:</strong> ${hora} hs</p>
-                    <a href="${link}" target="_blank" rel="noopener noreferrer">
-                        <button class="buy-button">Comprar entradas</button>
-                    </a>
+                    ${purchaseButtonHtml}
                 </div>
             `;
         })

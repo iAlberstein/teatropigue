@@ -13,13 +13,13 @@ const routes = {
 
 function navigateTo(path) {
     console.log('Navigating to:', path); // Depuración
-    const normalized = path.startsWith('/') ? path : '/' + path;
-    window.history.pushState({}, '', normalized);
+    const normalized = path.startsWith('/') ? path : '/' + path.replace(/^#\/?/, '');
+    window.location.hash = '#' + normalized;
     renderView();
 }
 
 function parseRoute() {
-    const path = window.location.pathname || '/';
+    const path = window.location.hash.slice(1) || '/';
     console.log('Parsing route:', path); // Depuración
     const routeKeys = Object.keys(routes);
     for (let route of routeKeys) {
@@ -45,21 +45,21 @@ function renderView() {
             app.innerHTML = handler(...params);
 
             // Lógica específica según la vista después de renderizar
-            if (window.location.pathname === '/' || window.location.pathname === '/home') {
+            if (window.location.hash === '' || window.location.hash === '#/' || window.location.hash === '#/home') {
                 console.log('Loading home view specific logic...');
                 setupNewsletterForm();
                 loadNextShow();
-            } else if (window.location.pathname.startsWith('/cartelera')) {
+            } else if (window.location.hash.startsWith('#/cartelera')) {
                 loadCartelera();
-            } else if (window.location.pathname.startsWith('/show/')) {
-                const id = window.location.pathname.split('/').pop();
+            } else if (window.location.hash.startsWith('#/show/')) {
+                const id = window.location.hash.split('/').pop();
                 loadShowDetail(id);
-            } else if (window.location.pathname === '/contacto') {
+            } else if (window.location.hash === '#/contacto') {
                 setupContactoForm();
-            } else if (window.location.pathname === '/admin33860988') {
+            } else if (window.location.hash === '#/admin33860988') {
                 setupAdminForm();
                 loadAdminShows();
-            } else if (window.location.pathname === '/palier') {
+            } else if (window.location.hash === '#/palier') {
                 setupPalierDescriptions();
             }
 
@@ -67,8 +67,8 @@ function renderView() {
             setupNavbarCollapse();
 
             // Reasignar eventos para los enlaces
-            // Enlaces internos sin hash (History API)
-            const links = document.querySelectorAll('a[href^="/"]');
+            // Enlaces internos con hash
+            const links = document.querySelectorAll('a[href^="#"]');
             links.forEach(link => {
                 link.removeEventListener('click', handleLinkClick);
                 link.addEventListener('click', handleLinkClick);
@@ -83,8 +83,8 @@ function renderView() {
     }
 }
 
-window.addEventListener('popstate', () => {
-    console.log('Popstate event triggered');
+window.addEventListener('hashchange', () => {
+    console.log('hashchange event triggered');
     renderView();
 });
 
@@ -95,9 +95,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function handleLinkClick(e) {
     const href = e.currentTarget.getAttribute('href');
-    if (href && href.startsWith('/')) {
+    if (href && href.startsWith('#')) {
         e.preventDefault();
-        navigateTo(href);
+        const path = href.slice(1);
+        navigateTo(path);
     }
 }
 
@@ -626,7 +627,7 @@ function loadNextShow() {
 
                     return `
                         <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                            <a href="/show/${show.id_show}">
+                            <a href="#/show/${show.id_show}">
                                 <picture>
                                     <source media="(min-width: 750px)" srcset="${bannerImage}">
                                     <img src="${fallbackImage}" alt="${show.name}" class="d-block w-100 banner-image">
@@ -723,16 +724,21 @@ function loadCartelera() {
                             formattedDate = parsedDate.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
                         }
                     }
-
+                    const isBoleteria = typeof show.link === 'string' && (show.link === '/boletería' || show.link === '/boleteria');
                     return `
                         <div class="show-card">
                             ${(show.image && show.image !== '') ? `<img src="${show.image}" alt="${show.name}" class="show-image">` : ''}
                             <div class="show-info">
                                 <h3>${show.name}</h3>
                                 <p>${formattedDate} <br> ${show.hora ? show.hora.substring(0, 5) : 'Hora no disponible'}</p>
-                                <a href="/show/${show.id_show}">
+                                <a href="#/show/${show.id_show}">
                                     <button>+ Info</button>
                                 </a>
+                                ${isBoleteria ? `
+                                <a href="#${show.link}">
+                                    <button class="buy-button secondary">Comprar en boletería</button>
+                                </a>
+                                ` : ''}
                             </div>
                         </div>
                     `;
@@ -813,13 +819,13 @@ function loadShowDetail(id) {
             if (rawLink) {
                 if (isBoleteria) {
                     purchaseButtonHtml = `
-                        <a href="${rawLink}">
+                        <a href="#${rawLink}">
                             <button class="buy-button">Comprar en boletería</button>
                         </a>
                     `;
                 } else if (isInternal) {
                     purchaseButtonHtml = `
-                        <a href="${rawLink}">
+                        <a href="#${rawLink}">
                             <button class="buy-button">Comprar entradas</button>
                         </a>
                     `;
